@@ -33,11 +33,8 @@ class _MyAppState extends State<MyApp> {
                   final task = snapshot.data!;
                   return SurveyKit(
                     onResult: (SurveyResult result) {
-                      print(result.finishReason);
-
-                      for (StepResult stepResult in result.results) {
-                        print(stepResult.results.toString());
-                      }
+                      print(result.results[1].results[0].result.toString());
+                      print(task.steps);
                     },
                     task: task,
                     showProgress: true,
