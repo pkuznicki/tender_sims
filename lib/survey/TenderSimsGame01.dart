@@ -1,16 +1,13 @@
 import 'package:survey_kit/survey_kit.dart';
 import 'package:tender_sims/survey/ISurveyConnector.dart';
 import 'package:flutter/material.dart' hide Step;
+import 'steps/InstructionStepMarketInTenderNation.dart';
 
 class TenderSimsGame01 extends ISurveyConnector {
   @override
   List<Step> getSteps() {
     return [
-      InstructionStep(
-        title: 'Welcome to the\nQuickBird Studios\nHealth Survey',
-        text: 'Get ready for a bunch of super random questions!',
-        buttonText: 'Let\'s go!',
-      ),
+      InstructionStepMarketInTenderNation().getStep(),
       QuestionStep(
         title: 'How old are you?',
         answerFormat: IntegerAnswerFormat(
