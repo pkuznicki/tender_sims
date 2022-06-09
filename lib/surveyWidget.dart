@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:convert';
@@ -33,7 +35,7 @@ class SurveyWidget extends StatelessWidget {
                       },
                       task: task,
                       showProgress: true,
-                      localizations: {
+                      localizations: const {
                         'cancel': 'Cancel',
                         'next': 'Next',
                       },
@@ -57,12 +59,12 @@ class SurveyWidget extends StatelessWidget {
                         iconTheme: const IconThemeData(
                           color: Colors.cyan,
                         ),
-                        textSelectionTheme: TextSelectionThemeData(
+                        textSelectionTheme: const TextSelectionThemeData(
                           cursorColor: Colors.cyan,
                           selectionColor: Colors.cyan,
                           selectionHandleColor: Colors.cyan,
                         ),
-                        cupertinoOverrideTheme: CupertinoThemeData(
+                        cupertinoOverrideTheme: const CupertinoThemeData(
                           primaryColor: Colors.cyan,
                         ),
                         outlinedButtonTheme: OutlinedButtonThemeData(
@@ -73,11 +75,11 @@ class SurveyWidget extends StatelessWidget {
                             side: MaterialStateProperty.resolveWith(
                               (Set<MaterialState> state) {
                                 if (state.contains(MaterialState.disabled)) {
-                                  return BorderSide(
+                                  return const BorderSide(
                                     color: Colors.grey,
                                   );
                                 }
-                                return BorderSide(
+                                return const BorderSide(
                                   color: Colors.cyan,
                                 );
                               },
@@ -127,7 +129,7 @@ class SurveyWidget extends StatelessWidget {
                           ),
                           bodyText2: TextStyle(
                             fontSize: 18.0,
-                            color: Colors.black,
+                            color: Colors.red,
                           ),
                           subtitle1: TextStyle(
                             fontSize: 18.0,
