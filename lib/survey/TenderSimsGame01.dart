@@ -2,12 +2,14 @@ import 'package:survey_kit/survey_kit.dart';
 import 'package:tender_sims/survey/ISurveyConnector.dart';
 import 'package:flutter/material.dart' hide Step;
 import 'steps/InstructionStepMarketInTenderNation.dart';
+import 'steps/CustomStep.dart';
 
 class TenderSimsGame01 extends ISurveyConnector {
   @override
   List<Step> getSteps() {
     return [
       InstructionStepMarketInTenderNation().getStep(),
+      CustomStep(id: StepIdentifier(id: 'ddd'), title: 'title', text: 'text'),
       QuestionStep(
         title: 'How old are you?',
         answerFormat: IntegerAnswerFormat(
@@ -55,35 +57,6 @@ class TenderSimsGame01 extends ISurveyConnector {
             TextChoice(text: 'Pet', value: 'Pet'),
             TextChoice(text: 'Pollen', value: 'Pollen'),
           ],
-        ),
-      ),
-      QuestionStep(
-        title: 'Done?',
-        text: 'We are done, do you mind to tell us more about yourself?',
-        isOptional: true,
-        answerFormat: SingleChoiceAnswerFormat(
-          textChoices: [
-            TextChoice(text: 'Yes', value: 'Yes'),
-            TextChoice(text: 'No', value: 'No'),
-          ],
-          defaultSelection: TextChoice(text: 'No', value: 'No'),
-        ),
-      ),
-      QuestionStep(
-        title: 'When did you wake up?',
-        answerFormat: TimeAnswerFormat(
-          defaultValue: TimeOfDay(
-            hour: 12,
-            minute: 0,
-          ),
-        ),
-      ),
-      QuestionStep(
-        title: 'When was your last holiday?',
-        answerFormat: DateAnswerFormat(
-          minDate: DateTime.utc(1970),
-          defaultDate: DateTime.now(),
-          maxDate: DateTime.now(),
         ),
       ),
       CompletionStep(

@@ -32,6 +32,7 @@ class SurveyWidget extends StatelessWidget {
                     return SurveyKit(
                       onResult: (SurveyResult result) {
                         print(result.finishReason);
+                        print(result.results.toString());
                       },
                       task: task,
                       showProgress: true,
