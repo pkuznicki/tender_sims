@@ -24,6 +24,7 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
+  // Note used as this does not work.
   Future<Task> getJsonTask() async {
     final taskJson = await rootBundle.loadString('assets/tender_sims.json');
     final taskMap = json.decode(taskJson);
