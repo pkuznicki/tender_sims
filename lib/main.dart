@@ -3,9 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
-import 'survey/ISurveyConnector.dart';
-import 'survey/TenderSimsGame01.dart';
-import 'surveyWidget.dart';
+import 'survey/interfaces/ISurveyConnector.dart';
+import 'survey/concretegames/TenderSimsGame01.dart';
+import 'package:tender_sims/survey/widgets/surveyWidget.dart';
 
 void main() {
   runApp(MyApp());

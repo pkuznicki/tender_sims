@@ -1,7 +1,8 @@
 import 'package:survey_kit/survey_kit.dart';
 import 'package:flutter/material.dart' as fl;
 import 'CustomResult.dart';
-import 'InstructionStepMarketInTenderNation.dart' as iss;
+import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepMarketInTenderNation.dart'
+    as iss;
 
 class CustomStep extends Step {
   final String title;

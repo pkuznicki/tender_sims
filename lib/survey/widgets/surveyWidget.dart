@@ -7,8 +7,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
-import 'survey/ISurveyConnector.dart';
-import 'survey/TenderSimsGame01.dart';
+import '../interfaces/ISurveyConnector.dart';
+import 'package:tender_sims/survey/concretegames/TenderSimsGame01.dart';
 
 class SurveyWidget extends StatelessWidget {
   @override

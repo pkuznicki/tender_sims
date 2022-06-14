@@ -1,8 +1,8 @@
 import 'package:survey_kit/survey_kit.dart';
-import 'package:tender_sims/survey/ISurveyConnector.dart';
+import 'package:tender_sims/survey/interfaces/ISurveyConnector.dart';
 import 'package:flutter/material.dart' hide Step;
-import 'steps/InstructionStepMarketInTenderNation.dart';
-import 'steps/CustomStep.dart';
+import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepMarketInTenderNation.dart';
+import '../steps/CustomStep.dart';
 
 class TenderSimsGame01 extends ISurveyConnector {
   @override
