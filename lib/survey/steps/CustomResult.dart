@@ -4,8 +4,8 @@ class CustomResult extends QuestionResult<String> {
   late String customData;
   late String valueIdentifier;
   late Identifier identifier;
-  late DateTime startDate;
-  late DateTime endDate;
+  late DateTime startDate = DateTime.now();
+  late DateTime endDate = DateTime.now();
   late String value;
 
   CustomResult(
