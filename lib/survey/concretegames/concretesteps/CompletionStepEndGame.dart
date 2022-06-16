@@ -8,5 +8,5 @@ class CompletionStepEndGame extends ICompletionStep {
       : super(
             stepIdentifier: StepIdentifier(id: 'end_game'),
             title: 'End of Game!',
-            text: 'Thank you for participating in the game!');
+            text: 'Click NEXT to send the results.');
 }

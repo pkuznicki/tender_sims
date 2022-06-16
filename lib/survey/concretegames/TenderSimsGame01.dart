@@ -19,6 +19,12 @@ class TenderSimsGame01 extends ISurveyConnector {
     IQuestionStep QSTeamName = QuestionStepTeamName();
     ICompletionStep CSEndGame = CompletionStepEndGame();
 
-    return [ISTenderNationLogo, ISMarketInTenderNation, QSZipper, CSEndGame];
+    return [
+      ISTenderNationLogo,
+      QSTeamName,
+      ISMarketInTenderNation,
+      QSZipper,
+      CSEndGame
+    ];
   }
 }

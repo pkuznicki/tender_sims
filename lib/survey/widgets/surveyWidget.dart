@@ -113,16 +113,15 @@ class SurveyWidget extends StatelessWidget {
                   textTheme: const TextTheme(
                     headline2: TextStyle(
                       fontSize: 28.0,
-                      color: Colors.black,
+                      color: Color.fromRGBO(13, 33, 207, 100),
                     ),
                     headline5: TextStyle(
                       fontSize: 24.0,
-                      color: Colors.black,
+                      color: Color.fromRGBO(13, 33, 207, 100),
                     ),
                     bodyText2: TextStyle(
-                      fontSize: 18.0,
-                      color: Colors.red,
-                    ),
+                        fontSize: 18.0,
+                        color: Color.fromRGBO(13, 33, 207, 100)),
                     subtitle1: TextStyle(
                       fontSize: 18.0,
                       color: Colors.black,
