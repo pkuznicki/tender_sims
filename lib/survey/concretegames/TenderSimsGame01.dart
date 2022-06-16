@@ -12,9 +12,13 @@ class TenderSimsGame01 extends ISurveyConnector {
   @override
   List<Step> getSteps() {
     IInstructionStep ISTenderNationLogo = InstructionStepTenderNationLogo();
+    IInstructionStep ISMarketInTenderNation =
+        InstructionStepMarketInTenderNation();
     IQuestionStep QSZipper = QuestionStepPriceZipper();
+
     return [
       ISTenderNationLogo,
+      ISMarketInTenderNation,
       QSZipper,
       CompletionStep(
         stepIdentifier: StepIdentifier(id: '321'),

@@ -1,6 +1,5 @@
 import 'package:survey_kit/survey_kit.dart';
 import 'package:tender_sims/survey/interfaces/IInstructionStep.dart';
-import 'package:tender_sims/survey/steps/CustomStep.dart';
 import 'package:flutter/material.dart';
 
 class InstructionStepTenderNationLogo extends IInstructionStep {
