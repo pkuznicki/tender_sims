@@ -6,6 +6,7 @@ import 'package:survey_kit/survey_kit.dart';
 import 'survey/interfaces/ISurveyConnector.dart';
 import 'survey/concretegames/TenderSimsGame01.dart';
 import 'package:tender_sims/survey/widgets/surveyWidget.dart';
+import 'survey/concretegames/concretesteps/QuestionStepTeamName.dart';
 
 void main() {
   runApp(MyApp());
