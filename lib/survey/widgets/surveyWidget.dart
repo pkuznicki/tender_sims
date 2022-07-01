@@ -20,7 +20,7 @@ class SurveyWidget extends StatelessWidget {
       child: Align(
         alignment: Alignment.center,
         child: FutureBuilder<Task>(
-          future: getTask(),
+          future: getTask(context),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData &&
@@ -148,12 +148,12 @@ class SurveyWidget extends StatelessWidget {
   }
 }
 
-Future<Task> getTask() {
+Future<Task> getTask(BuildContext context) {
   ISurveyConnector tendersurvey = TenderSimsGame01();
 
   var task = OrderedTask(
     id: TaskIdentifier(),
-    steps: tendersurvey.getSteps(),
+    steps: tendersurvey.getSteps(context),
   );
   return Future.value(task);
 }

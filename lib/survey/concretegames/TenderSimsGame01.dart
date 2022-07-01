@@ -8,13 +8,15 @@ import 'package:tender_sims/survey/interfaces/IInstructionStep.dart';
 import 'package:tender_sims/survey/interfaces/IQuestionStep.dart';
 import '../concretegames/concretesteps/QuestionStepTeamName.dart';
 import 'package:tender_sims/survey/concretegames/concretesteps/CompletionStepEndGame.dart';
+import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepChart.dart';
 
 class TenderSimsGame01 extends ISurveyConnector {
   @override
-  List<Step> getSteps() {
+  List<Step> getSteps(context) {
     IInstructionStep ISTenderNationLogo = InstructionStepTenderNationLogo();
+    IInstructionStep ISTestStep = InstructionStepChart(context);
     IInstructionStep ISMarketInTenderNation =
-        InstructionStepMarketInTenderNation();
+        InstructionStepMarketInTenderNation(context);
     IQuestionStep QSZipper = QuestionStepPriceZipper();
     IQuestionStep QSTeamName = QuestionStepTeamName();
     ICompletionStep CSEndGame = CompletionStepEndGame();
