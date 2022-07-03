@@ -1,5 +1,6 @@
 import 'dart:html';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'dart:convert';
@@ -14,7 +15,7 @@ class SurveyWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.blue,
+      color: Color.fromARGB(255, 5, 55, 96),
       height: MediaQuery.of(context).size.height,
       width: MediaQuery.of(context).size.width,
       child: Align(
@@ -28,8 +29,16 @@ class SurveyWidget extends StatelessWidget {
               final task = snapshot.data!;
               return SurveyKit(
                 onResult: (SurveyResult result) {
-                  print(result.finishReason);
-                  print(result.results.toString());
+                  final docRef = FirebaseFirestore.instance
+                      .collection("surveys")
+                      .doc("njEEx0fSRppntVNagvLQ");
+                  docRef.get().then(
+                    (DocumentSnapshot doc) {
+                      final data = doc.data() as Map<String, dynamic>;
+                      print(data.toString());
+                    },
+                    onError: (e) => print("Error getting document: $e"),
+                  );
                 },
                 task: task,
                 showProgress: true,
@@ -39,14 +48,15 @@ class SurveyWidget extends StatelessWidget {
                 },
                 themeData: Theme.of(context).copyWith(
                   colorScheme: ColorScheme.fromSwatch(
-                    primarySwatch: Colors.cyan,
+                    primarySwatch: Colors.blue,
                   ).copyWith(
                     onPrimary: Colors.white,
                   ),
-                  primaryColor: Colors.cyan,
-                  backgroundColor: Colors.white,
+                  primaryColor: Color.fromARGB(
+                      255, 212, 0, 173), // Progress Bar and Button text
+                  backgroundColor: Colors.white, // Background
                   appBarTheme: const AppBarTheme(
-                    color: Colors.white,
+                    color: Color.fromARGB(255, 71, 142, 46), // Top Bar color
                     iconTheme: IconThemeData(
                       color: Colors.cyan,
                     ),

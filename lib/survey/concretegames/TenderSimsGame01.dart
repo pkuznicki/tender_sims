@@ -23,6 +23,7 @@ class TenderSimsGame01 extends ISurveyConnector {
 
     return [
       ISTenderNationLogo,
+      ISTestStep,
       QSTeamName,
       ISMarketInTenderNation,
       QSZipper,

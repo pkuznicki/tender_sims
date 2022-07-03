@@ -6,7 +6,8 @@ class InstructionStepGeneric extends IInstructionStep {
   InstructionStepGeneric(BuildContext context,
       {String title = 'no title',
       String asset = 'no asset path',
-      String bodytext = 'no body text'})
+      String bodytext = 'no body text',
+      id = 'no id'})
       : super(
             Container(
                 child: Column(children: [
@@ -25,7 +26,7 @@ class InstructionStepGeneric extends IInstructionStep {
                   bodytext,
                   textAlign: TextAlign.justify,
                 )),
-            id: StepIdentifier(id: 'is_market_tn'),
+            id: StepIdentifier(id: id),
             title: 'The Market in Tender Nation',
             text: '');
 }

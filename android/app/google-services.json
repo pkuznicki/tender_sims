@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "789704523738",
+    "project_id": "marbls-tender-sims",
+    "storage_bucket": "marbls-tender-sims.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:789704523738:android:7b7140bd8f9c0fadb0cae3",
+        "android_client_info": {
+          "package_name": "com.example.tender_sims"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "789704523738-hvc6d9d3loovnuh50ihjvs2jbuelo60i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOTJNeHH6rv6Cr2SNjgMo_qQL_MlTgrN8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "789704523738-hvc6d9d3loovnuh50ihjvs2jbuelo60i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
