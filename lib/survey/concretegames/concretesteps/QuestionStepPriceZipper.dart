@@ -8,7 +8,7 @@ class QuestionStepPriceZipper extends IQuestionStep {
       : super(
           title: 'Please Select Your Bidding Price in \$.',
           answerFormat: ScaleAnswerFormat(
-            step: 1,
+            step: 0.1,
             minimumValue: 10,
             maximumValue: 50,
             defaultValue: 10,
