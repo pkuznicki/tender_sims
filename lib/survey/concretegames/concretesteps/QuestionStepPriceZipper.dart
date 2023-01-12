@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class QuestionStepPriceZipper extends IQuestionStep {
   QuestionStepPriceZipper()
       : super(
+          stepIdentifier: StepIdentifier(id: 'price_zipper'),
           title: 'Please Select Your Bidding Price in \$.',
           answerFormat: ScaleAnswerFormat(
             step: 0.1,

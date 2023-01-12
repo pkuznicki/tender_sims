@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class QuestionStepTeamName extends IQuestionStep {
   QuestionStepTeamName()
       : super(
+          stepIdentifier: StepIdentifier(id: 'team_name'),
           title: 'Please Choose a Name for your Team.',
           answerFormat: TextAnswerFormat(
             maxLines: 1,

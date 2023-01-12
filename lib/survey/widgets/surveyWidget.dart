@@ -40,17 +40,31 @@ class SurveyWidget extends StatelessWidget {
                       final data = doc.data() as Map<String, dynamic>;
                       game_id = doc['game_id'];
 
+                      Map<String, String> map_result =
+                          new Map<String, String>();
+
+                      String id_no_null(String? myString) {
+                        if (myString == null) {
+                          return 'nodata';
+                        }
+
+                        return myString;
+                      }
+
                       for (StepResult sr in result.results) {
                         for (QuestionResult qr in sr.results) {
-                          print(qr.result.toString());
+                          map_result[id_no_null(sr.id?.id)] =
+                              qr.result.toString();
                         }
                       }
+                      map_result['game_id'] = game_id;
+                      String team_id = id_no_null(map_result['team_name']);
 
                       //Write results
                       final docRef_survey = FirebaseFirestore.instance
-                          .collection("surveys")
-                          .doc("main");
-                      docRef_survey.set({'surveyxx': game_id}).onError(
+                          .collection(game_id)
+                          .doc(team_id);
+                      docRef_survey.set(map_result).onError(
                           (e, _) => print("Error writing document: $e"));
                     },
                     onError: (e) => print("Error getting document: $e"),
