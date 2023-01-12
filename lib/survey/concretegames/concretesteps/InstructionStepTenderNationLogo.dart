@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class InstructionStepTenderNationLogo extends IInstructionStep {
   InstructionStepTenderNationLogo()
-      : super(Image.asset('tn_logo_small.png'), Container(),
+      : super(Image.asset('assets/tn_logo_small.png'), Container(),
             id: StepIdentifier(id: 'is_tn_logo'),
             title: 'The Market in Tender Nation',
             text: '');

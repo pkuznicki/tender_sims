@@ -12,7 +12,7 @@ class InstructionStepMarketInTenderNation extends IInstructionStep {
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
               ),
               Image.asset(
-                'tn_map.png',
+                'assets/tn_map.png',
                 scale: 4,
               ),
             ])),
