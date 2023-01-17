@@ -10,6 +10,7 @@ import 'survey/interfaces/ISurveyConnector.dart';
 import 'survey/concretegames/TenderSimsGame01.dart';
 import 'package:tender_sims/survey/widgets/surveyWidget.dart';
 import 'survey/concretegames/concretesteps/QuestionStepTeamName.dart';
+import 'package:tender_sims/survey/widgets/adminWidget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -46,7 +47,16 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(body: SurveyWidget(game_id_prv)),
+      title: 'Named Routes Demo',
+      // Start the app with the "/" named route. In this case, the app starts
+      // on the FirstScreen widget.
+      initialRoute: '/',
+      routes: {
+        // When navigating to the "/" route, build the FirstScreen widget.
+        '/': (context) => Scaffold(body: SurveyWidget(game_id_prv)),
+        // When navigating to the "/second" route, build the SecondScreen widget.
+        '/admin': (context) => const AdminScreen(),
+      },
     );
   }
 
@@ -57,3 +67,7 @@ class _MyAppState extends State<MyApp> {
     return Task.fromJson(taskMap);
   }
 }
+
+
+
+  //home: Scaffold(body: SurveyWidget(game_id_prv)),
