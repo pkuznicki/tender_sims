@@ -8,9 +8,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
+import 'package:tender_sims/survey/concretegames/w1g2.dart';
 import '../interfaces/ISurveyConnector.dart';
 import 'package:tender_sims/survey/concretegames/TenderSimsGame01.dart' as game;
+import 'package:tender_sims/survey/concretegames/w1g1.dart' as w1g1;
 import 'package:tender_sims/survey/concretegames/w1g0.dart' as w1g0;
+import 'package:tender_sims/survey/concretegames/w1g2.dart' as w1g2;
+import 'package:tender_sims/survey/concretegames/w1g3.dart' as w1g3;
 
 class SurveyWidget extends StatelessWidget {
   String game_id_prv = 'no game_id';
@@ -185,6 +189,15 @@ Future<Task> getTask(BuildContext context, String game_id) {
 
   if (game_id == 'w1g0') {
     tendersurvey = w1g0.w1g0();
+  }
+  if (game_id == 'w1g1') {
+    tendersurvey = w1g1.w1g1();
+  }
+  if (game_id == 'w1g2') {
+    tendersurvey = w1g2.w1g2();
+  }
+  if (game_id == 'w1g3') {
+    tendersurvey = w1g3.w1g3();
   }
 
   var task = OrderedTask(
