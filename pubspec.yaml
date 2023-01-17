@@ -65,6 +65,12 @@ flutter:
      - assets/tn_logo_small.png
      - assets/tn_map.png
      - assets/tn_logo.png
+     - assets/tn_hist_prices.png
+     - assets/tn_calendar.png
+     - assets/tn_w1g0s5.png
+     - assets/tn_calendar.png
+     - assets/tn_calendar2.png
+     - assets/tn_calendar3.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

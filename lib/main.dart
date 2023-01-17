@@ -16,19 +16,37 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  String game_id = 'no_game_id';
+  final docRef_settings =
+      FirebaseFirestore.instance.collection("settings").doc("main");
+
+  await docRef_settings.get().then((DocumentSnapshot doc) {
+    final data = doc.data() as Map<String, dynamic>;
+    game_id = doc['game_id'];
+  });
+
+  runApp(MyApp(game_id));
 }
 
 class MyApp extends StatefulWidget {
+  String game_id_prv = 'no game_id';
+  MyApp(String game_id) {
+    game_id_prv = game_id;
+  }
   @override
-  _MyAppState createState() => _MyAppState();
+  _MyAppState createState() => _MyAppState(game_id_prv);
 }
 
 class _MyAppState extends State<MyApp> {
+  String game_id_prv = 'no game_id';
+  _MyAppState(String game_id) {
+    game_id_prv = game_id;
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: Scaffold(body: SurveyWidget()),
+      home: Scaffold(body: SurveyWidget(game_id_prv)),
     );
   }
 

@@ -9,9 +9,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
 import '../interfaces/ISurveyConnector.dart';
-import 'package:tender_sims/survey/concretegames/TenderSimsGame01.dart';
+import 'package:tender_sims/survey/concretegames/TenderSimsGame01.dart' as game;
+import 'package:tender_sims/survey/concretegames/w1g0.dart' as w1g0;
 
 class SurveyWidget extends StatelessWidget {
+  String game_id_prv = 'no game_id';
+
+  SurveyWidget(String game_id) {
+    game_id_prv = game_id;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,7 +28,7 @@ class SurveyWidget extends StatelessWidget {
       child: Align(
         alignment: Alignment.center,
         child: FutureBuilder<Task>(
-          future: getTask(context),
+          future: getTask(context, game_id_prv),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.done &&
                 snapshot.hasData &&
@@ -29,46 +36,31 @@ class SurveyWidget extends StatelessWidget {
               final task = snapshot.data!;
               return SurveyKit(
                 onResult: (SurveyResult result) {
-                  //get game id
-                  String game_id = 'no_game_id';
-                  final docRef_settings = FirebaseFirestore.instance
-                      .collection("settings")
-                      .doc("main");
+                  Map<String, String> map_result = new Map<String, String>();
 
-                  docRef_settings.get().then(
-                    (DocumentSnapshot doc) {
-                      final data = doc.data() as Map<String, dynamic>;
-                      game_id = doc['game_id'];
+                  String id_no_null(String? myString) {
+                    if (myString == null) {
+                      return 'nodata';
+                    }
 
-                      Map<String, String> map_result =
-                          new Map<String, String>();
+                    return myString;
+                  }
 
-                      String id_no_null(String? myString) {
-                        if (myString == null) {
-                          return 'nodata';
-                        }
+                  for (StepResult sr in result.results) {
+                    for (QuestionResult qr in sr.results) {
+                      map_result[id_no_null(sr.id?.id)] = qr.result.toString();
+                    }
+                  }
+                  map_result['game_id'] = game_id_prv;
+                  String team_id = id_no_null(map_result['team_name']);
 
-                        return myString;
-                      }
-
-                      for (StepResult sr in result.results) {
-                        for (QuestionResult qr in sr.results) {
-                          map_result[id_no_null(sr.id?.id)] =
-                              qr.result.toString();
-                        }
-                      }
-                      map_result['game_id'] = game_id;
-                      String team_id = id_no_null(map_result['team_name']);
-
-                      //Write results
-                      final docRef_survey = FirebaseFirestore.instance
-                          .collection(game_id)
-                          .doc(team_id);
-                      docRef_survey.set(map_result).onError(
-                          (e, _) => print("Error writing document: $e"));
-                    },
-                    onError: (e) => print("Error getting document: $e"),
-                  );
+                  //Write results
+                  final docRef_survey = FirebaseFirestore.instance
+                      .collection(game_id_prv)
+                      .doc(team_id);
+                  docRef_survey
+                      .set(map_result)
+                      .onError((e, _) => print("Error writing document: $e"));
                 },
                 task: task,
                 showProgress: true,
@@ -83,27 +75,27 @@ class SurveyWidget extends StatelessWidget {
                     onPrimary: Colors.white,
                   ),
                   primaryColor: Color.fromARGB(
-                      255, 212, 0, 173), // Progress Bar and Button text
+                      255, 35, 0, 212), // Progress Bar and Button text
                   backgroundColor: Colors.white, // Background
                   appBarTheme: const AppBarTheme(
-                    color: Color.fromARGB(255, 71, 142, 46), // Top Bar color
+                    color: Color.fromARGB(255, 193, 195, 250), // Top Bar color
                     iconTheme: IconThemeData(
-                      color: Colors.cyan,
+                      color: Color.fromARGB(255, 35, 0, 212),
                     ),
                     titleTextStyle: TextStyle(
-                      color: Colors.cyan,
+                      color: Color.fromARGB(255, 35, 0, 212),
                     ),
                   ),
                   iconTheme: const IconThemeData(
-                    color: Colors.cyan,
+                    color: Color.fromARGB(255, 35, 0, 212),
                   ),
                   textSelectionTheme: const TextSelectionThemeData(
-                    cursorColor: Colors.cyan,
-                    selectionColor: Colors.cyan,
-                    selectionHandleColor: Colors.cyan,
+                    cursorColor: Color.fromARGB(255, 35, 0, 212),
+                    selectionColor: Color.fromARGB(255, 35, 0, 212),
+                    selectionHandleColor: Color.fromARGB(255, 35, 0, 212),
                   ),
                   cupertinoOverrideTheme: const CupertinoThemeData(
-                    primaryColor: Colors.cyan,
+                    primaryColor: Color.fromARGB(255, 35, 0, 212),
                   ),
                   outlinedButtonTheme: OutlinedButtonThemeData(
                     style: ButtonStyle(
@@ -118,7 +110,7 @@ class SurveyWidget extends StatelessWidget {
                             );
                           }
                           return const BorderSide(
-                            color: Colors.cyan,
+                            color: Color.fromARGB(255, 35, 0, 212),
                           );
                         },
                       ),
@@ -135,7 +127,7 @@ class SurveyWidget extends StatelessWidget {
                                 );
                           }
                           return Theme.of(context).textTheme.button?.copyWith(
-                                color: Colors.cyan,
+                                color: Color.fromARGB(255, 35, 0, 212),
                               );
                         },
                       ),
@@ -145,7 +137,7 @@ class SurveyWidget extends StatelessWidget {
                     style: ButtonStyle(
                       textStyle: MaterialStateProperty.all(
                         Theme.of(context).textTheme.button?.copyWith(
-                              color: Colors.cyan,
+                              color: Color.fromARGB(255, 35, 0, 212),
                             ),
                       ),
                     ),
@@ -188,8 +180,12 @@ class SurveyWidget extends StatelessWidget {
   }
 }
 
-Future<Task> getTask(BuildContext context) {
-  ISurveyConnector tendersurvey = TenderSimsGame01();
+Future<Task> getTask(BuildContext context, String game_id) {
+  ISurveyConnector tendersurvey = game.TenderSimsGame01();
+
+  if (game_id == 'w1g0') {
+    tendersurvey = w1g0.w1g0();
+  }
 
   var task = OrderedTask(
     id: TaskIdentifier(),
