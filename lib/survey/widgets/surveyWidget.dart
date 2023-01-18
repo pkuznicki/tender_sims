@@ -40,7 +40,7 @@ class SurveyWidget extends StatelessWidget {
               final task = snapshot.data!;
               return SurveyKit(
                 onResult: (SurveyResult result) {
-                  Map<String, String> map_result = new Map<String, String>();
+                  Map<String, dynamic> map_result = new Map<String, dynamic>();
 
                   String id_no_null(String? myString) {
                     if (myString == null) {
@@ -55,7 +55,10 @@ class SurveyWidget extends StatelessWidget {
                       map_result[id_no_null(sr.id?.id)] = qr.result.toString();
                     }
                   }
+
                   map_result['game_id'] = game_id_prv;
+                  map_result['ts'] = Timestamp.now();
+
                   String team_id = id_no_null(map_result['team_name']);
 
                   //Write results

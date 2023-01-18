@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tender_sims/survey/widgets/adminResultWidget.dart';
 
 class AdminScreen extends StatelessWidget {
   const AdminScreen({super.key});
@@ -38,7 +39,10 @@ class AdminScreen extends StatelessWidget {
               return allData;
             }
 
-            await getData().then((value) => print(value));
+            // Print Result
+            await getData().then((data) {
+              Navigator.of(context).pushNamed('/results', arguments: data);
+            });
           },
           child: const Text('See Results.'),
         ),

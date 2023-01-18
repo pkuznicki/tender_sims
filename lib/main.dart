@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
+import 'package:tender_sims/survey/widgets/adminResultWidget.dart';
 import 'firebase_options.dart';
 import 'survey/interfaces/ISurveyConnector.dart';
 import 'survey/concretegames/TenderSimsGame01.dart';
@@ -56,6 +57,7 @@ class _MyAppState extends State<MyApp> {
         '/': (context) => Scaffold(body: SurveyWidget(game_id_prv)),
         // When navigating to the "/second" route, build the SecondScreen widget.
         '/admin': (context) => const AdminScreen(),
+        '/results': (context) => const ResultsScreen(),
       },
     );
   }
