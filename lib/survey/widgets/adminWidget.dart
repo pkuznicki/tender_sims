@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tender_sims/survey/widgets/adminResultWidget.dart';
+import 'package:tender_sims/survey/helpers/result.dart';
+import 'package:tender_sims/survey/helpers/result.dart';
 
 class AdminScreen extends StatelessWidget {
   const AdminScreen({super.key});
@@ -28,20 +30,17 @@ class AdminScreen extends StatelessWidget {
             CollectionReference _collectionRef =
                 FirebaseFirestore.instance.collection(game_id);
 
-            Future<List<Object?>> getData() async {
+            Future<QuerySnapshot> getData() async {
               // Get docs from collection reference
               QuerySnapshot querySnapshot = await _collectionRef.get();
 
-              // Get data from docs and convert map to List
-              final allData =
-                  querySnapshot.docs.map((doc) => doc.data()).toList();
-
-              return allData;
+              return querySnapshot;
             }
 
             // Print Result
-            await getData().then((data) {
-              Navigator.of(context).pushNamed('/results', arguments: data);
+            await getData().then((qs) {
+              Navigator.of(context).pushNamed('/results',
+                  arguments: Result(game_id: game_id, data: qs));
             });
           },
           child: const Text('See Results.'),
