@@ -75,6 +75,9 @@ flutter:
      - assets/tn_w1g1s1.png
      - assets/tn_w1g2s1.png
      - assets/tn_w1g3s1.png
+     - assets/tn_w2g0s1.png
+     - assets/tn_w2g0s2.png
+     - assets/tn_w2g0s3.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -15,6 +15,7 @@ import 'package:tender_sims/survey/concretegames/w1g1.dart' as w1g1;
 import 'package:tender_sims/survey/concretegames/w1g0.dart' as w1g0;
 import 'package:tender_sims/survey/concretegames/w1g2.dart' as w1g2;
 import 'package:tender_sims/survey/concretegames/w1g3.dart' as w1g3;
+import 'package:tender_sims/survey/concretegames/w2g0.dart' as w2g0;
 
 class SurveyWidget extends StatelessWidget {
   String game_id_prv = 'no game_id';
@@ -202,7 +203,9 @@ Future<Task> getTask(BuildContext context, String game_id) {
   if (game_id == 'w1g3') {
     tendersurvey = w1g3.w1g3();
   }
-
+  if (game_id == 'w2g0') {
+    tendersurvey = w2g0.w2g0();
+  }
   var task = OrderedTask(
     id: TaskIdentifier(),
     steps: tendersurvey.getSteps(context),
