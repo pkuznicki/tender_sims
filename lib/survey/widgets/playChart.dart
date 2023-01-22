@@ -11,12 +11,12 @@ class PlayerChart extends StatelessWidget {
       charts.Series(
           id: "players",
           data: data,
-          domainFn: (PlayerSeries series, _) => series.year,
-          measureFn: (PlayerSeries series, _) => series.players,
+          domainFn: (PlayerSeries series, _) => series.team_name,
+          measureFn: (PlayerSeries series, _) => series.price,
           colorFn: (PlayerSeries series, _) => series.barColor)
     ];
     return Container(
-      height: 300,
+      height: 500,
       padding: const EdgeInsets.all(25),
       child: Card(
         child: Padding(
@@ -24,7 +24,7 @@ class PlayerChart extends StatelessWidget {
           child: Column(
             children: [
               Text(
-                "Growth of the player base of WOW.",
+                "Bidding Prices by Team.",
                 style: Theme.of(context).textTheme.bodyMedium,
               ),
               Expanded(
