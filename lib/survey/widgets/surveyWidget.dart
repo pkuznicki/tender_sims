@@ -19,6 +19,14 @@ import 'package:tender_sims/survey/concretegames/w2g0.dart' as w2g0;
 import 'package:tender_sims/survey/concretegames/w2g1.dart' as w2g1;
 import 'package:tender_sims/survey/concretegames/w2g2.dart' as w2g2;
 import 'package:tender_sims/survey/concretegames/w2g3.dart' as w2g3;
+import 'package:tender_sims/survey/concretegames/w3g0.dart' as w3g0;
+import 'package:tender_sims/survey/concretegames/w3g1.dart' as w3g1;
+import 'package:tender_sims/survey/concretegames/w3g2.dart' as w3g2;
+import 'package:tender_sims/survey/concretegames/w3g3.dart' as w3g3;
+import 'package:tender_sims/survey/concretegames/w4g0.dart' as w4g0;
+import 'package:tender_sims/survey/concretegames/w4g1.dart' as w4g1;
+import 'package:tender_sims/survey/concretegames/w4g2.dart' as w4g2;
+import 'package:tender_sims/survey/concretegames/w4g3.dart' as w4g3;
 
 class SurveyWidget extends StatelessWidget {
   String game_id_prv = 'no game_id';
@@ -217,6 +225,30 @@ Future<Task> getTask(BuildContext context, String game_id) {
   }
   if (game_id == 'w2g3') {
     tendersurvey = w2g3.w2g3();
+  }
+  if (game_id == 'w3g0') {
+    tendersurvey = w3g0.w3g0();
+  }
+  if (game_id == 'w3g1') {
+    tendersurvey = w3g1.w3g1();
+  }
+  if (game_id == 'w3g2') {
+    tendersurvey = w2g3.w2g3();
+  }
+  if (game_id == 'w3g3') {
+    tendersurvey = w3g3.w3g3();
+  }
+  if (game_id == 'w4g0') {
+    tendersurvey = w4g0.w4g0();
+  }
+  if (game_id == 'w4g1') {
+    tendersurvey = w4g1.w4g1();
+  }
+  if (game_id == 'w4g2') {
+    tendersurvey = w4g3.w4g3();
+  }
+  if (game_id == 'w4g3') {
+    tendersurvey = w4g3.w4g3();
   }
   var task = OrderedTask(
     id: TaskIdentifier(),

@@ -2,8 +2,8 @@ import 'package:survey_kit/survey_kit.dart';
 import 'package:tender_sims/survey/interfaces/IInstructionStep.dart';
 import 'package:flutter/material.dart';
 
-class InstructionStepw4g2s1 extends IInstructionStep {
-  InstructionStepw4g2s1(context)
+class InstructionStepw4g1s1 extends IInstructionStep {
+  InstructionStepw4g1s1(context)
       : super(
             Container(
                 child: Column(children: [

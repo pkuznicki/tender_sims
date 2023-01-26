@@ -13,6 +13,9 @@ import 'package:tender_sims/survey/widgets/surveyWidget.dart';
 import 'survey/concretegames/concretesteps/QuestionStepTeamName.dart';
 import 'package:tender_sims/survey/widgets/adminWidget.dart';
 
+// TODO
+// Add results won revenue and color coding
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -69,7 +72,5 @@ class _MyAppState extends State<MyApp> {
     return Task.fromJson(taskMap);
   }
 }
-
-
 
 //home: Scaffold(body: SurveyWidget(game_id_prv)),
