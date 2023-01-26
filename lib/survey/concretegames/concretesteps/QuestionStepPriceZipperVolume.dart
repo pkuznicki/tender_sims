@@ -4,11 +4,12 @@ import 'package:tender_sims/survey/steps/CustomStep.dart';
 import 'package:flutter/material.dart';
 
 class QuestionStepPriceZipperVolume extends IQuestionStep {
-  QuestionStepPriceZipperVolume()
+  QuestionStepPriceZipperVolume({int volume = 1000000})
       : super(
             stepIdentifier: StepIdentifier(id: 'price_zipper_volume'),
-            title: 'Please Select Your Bidding Volume..',
+            title: 'Please Select Your Bidding Volume from 0 to ' +
+                volume.toString(),
             answerFormat: IntegerAnswerFormat(
-                defaultValue: 1000000,
-                hint: 'Please select a value below 1.000.000'));
+              defaultValue: volume,
+            ));
 }

@@ -30,7 +30,7 @@ class w4g1 extends ISurveyConnector {
       ISw4g1s1,
       ISw4g1s2,
       ISQuestionStepZipper,
-      QuestionStepPriceZipperVolume(),
+      QuestionStepPriceZipperVolume(volume: 3000000),
       CSEndGame
     ];
   }

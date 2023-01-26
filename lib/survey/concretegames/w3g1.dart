@@ -27,7 +27,7 @@ class w3g1 extends ISurveyConnector {
       QuestionStepTeamName(),
       ISw3g1s1,
       ISQuestionStepZipper,
-      QuestionStepPriceZipperVolume(),
+      QuestionStepPriceZipperVolume(volume: 3000000),
       CSEndGame
     ];
   }

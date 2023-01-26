@@ -25,9 +25,9 @@ class w3g2 extends ISurveyConnector {
     return [
       ISTenderNationLogo,
       QuestionStepTeamName(),
-      QuestionStepPriceZipperVolume(),
       ISw3g2s1,
       ISQuestionStepZipper,
+      QuestionStepPriceZipperVolume(volume: 3000000),
       CSEndGame
     ];
   }

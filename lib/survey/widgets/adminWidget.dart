@@ -17,39 +17,44 @@ class AdminScreen extends StatelessWidget {
         title: const Text('Tender Sims Admin Screen'),
       ),
       body: Center(
-        child: ElevatedButton(
-          onPressed: () async {
-            // Get Game ID
-            String game_id = 'no_game_id';
-            final docRef_settings =
-                FirebaseFirestore.instance.collection("settings").doc("main");
-            await docRef_settings.get().then((DocumentSnapshot doc) {
-              final data = doc.data() as Map<String, dynamic>;
-              game_id = doc['game_id'];
-            });
+        child: Container(
+          height: 50,
+          width: 100,
+          child: ElevatedButton(
+            onPressed: () async {
+              // Get Game ID
+              String game_id = 'no_game_id';
+              final docRef_settings =
+                  FirebaseFirestore.instance.collection("settings").doc("main");
+              await docRef_settings.get().then((DocumentSnapshot doc) {
+                final data = doc.data() as Map<String, dynamic>;
+                game_id = doc['game_id'];
+              });
 
-            // Get Data
-            List<PlayerSeries> result_data = [];
-            final CollectionReference _collectionRef =
-                FirebaseFirestore.instance.collection(game_id);
+              // Get Data
+              List<PlayerSeries> result_data = [];
+              final CollectionReference _collectionRef =
+                  FirebaseFirestore.instance.collection(game_id);
 
-            await _collectionRef.get().then(
-              (qs) {
-                qs.docs.forEach((team_result) {
-                  result_data.add(
-                    PlayerSeries(
-                      team_name: team_result['team_name'],
-                      price: double.parse(team_result['price_zipper']),
-                      barColor: charts.ColorUtil.fromDartColor(Colors.blue),
-                    ),
-                  );
-                });
-              },
-            );
+              await _collectionRef.get().then(
+                (qs) {
+                  qs.docs.forEach((team_result) {
+                    result_data.add(
+                      PlayerSeries(
+                        team_name: team_result['team_name'],
+                        price: double.parse(team_result['price_zipper']),
+                        barColor: charts.ColorUtil.fromDartColor(Colors.blue),
+                      ),
+                    );
+                  });
+                },
+              );
 
-            Navigator.of(context).pushNamed('/results', arguments: result_data);
-          },
-          child: const Text('See Results.'),
+              Navigator.of(context)
+                  .pushNamed('/results', arguments: result_data);
+            },
+            child: const Text('Results - Wave 1'),
+          ),
         ),
       ),
     );

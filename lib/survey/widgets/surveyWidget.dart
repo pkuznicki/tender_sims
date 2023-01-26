@@ -64,9 +64,14 @@ class SurveyWidget extends StatelessWidget {
 
                   for (StepResult sr in result.results) {
                     for (QuestionResult qr in sr.results) {
-                      map_result[id_no_null(sr.id?.id)] = qr.result.toString();
+                      String id = id_no_null(sr.id?.id);
+                      if (id != 'team_name') {
+                        map_result[id] = qr.result.toString();
+                      }
                     }
                   }
+
+                  TextChoice team_name = map_result['team_name'];
 
                   map_result['game_id'] = game_id_prv;
                   map_result['ts'] = Timestamp.now();
