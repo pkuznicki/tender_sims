@@ -11,6 +11,7 @@ import 'package:tender_sims/survey/concretegames/concretesteps/CompletionStepEnd
 import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepChart.dart';
 import 'package:tender_sims/survey/helpers/helper.dart';
 import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepw1g3s1.dart';
+import 'package:tender_sims/survey/concretegames/concretesteps/QuestionStepPriceZipperVolume.dart';
 
 class w1g3 extends ISurveyConnector {
   @override

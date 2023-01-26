@@ -1,5 +1,7 @@
 import 'package:survey_kit/survey_kit.dart';
 import 'package:tender_sims/survey/concretegames/concretesteps/QuestionStepPriceZipper.dart';
+import 'package:tender_sims/survey/concretegames/concretesteps/QuestionStepPriceZipperVolume.dart';
+
 import 'package:tender_sims/survey/interfaces/ICompletionStep.dart';
 import 'package:tender_sims/survey/interfaces/ISurveyConnector.dart';
 import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepMarketInTenderNation.dart';
@@ -18,6 +20,7 @@ class w2g1 extends ISurveyConnector {
     IInstructionStep ISTenderNationLogo = InstructionStepTenderNationLogo();
     IInstructionStep ISw2g1s1 = InstructionStepw2g1s1(context);
     IQuestionStep ISQuestionStepZipper = QuestionStepPriceZipper();
+    IQuestionStep ISQuestionStepZipperVolume = QuestionStepPriceZipperVolume();
 
     ICompletionStep CSEndGame = CompletionStepEndGame();
 
@@ -26,6 +29,7 @@ class w2g1 extends ISurveyConnector {
       QuestionStepTeamName(),
       ISw2g1s1,
       ISQuestionStepZipper,
+      ISQuestionStepZipperVolume,
       CSEndGame
     ];
   }

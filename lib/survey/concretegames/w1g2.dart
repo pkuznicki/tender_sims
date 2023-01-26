@@ -1,5 +1,6 @@
 import 'package:survey_kit/survey_kit.dart';
 import 'package:tender_sims/survey/concretegames/concretesteps/QuestionStepPriceZipper.dart';
+import 'package:tender_sims/survey/concretegames/concretesteps/QuestionStepPriceZipperVolume.dart';
 import 'package:tender_sims/survey/interfaces/ICompletionStep.dart';
 import 'package:tender_sims/survey/interfaces/ISurveyConnector.dart';
 import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepMarketInTenderNation.dart';

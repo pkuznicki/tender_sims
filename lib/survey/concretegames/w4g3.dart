@@ -11,12 +11,15 @@ import 'package:tender_sims/survey/concretegames/concretesteps/CompletionStepEnd
 import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepChart.dart';
 import 'package:tender_sims/survey/helpers/helper.dart';
 import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepw4g3s1.dart';
+import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepw4g3s2.dart';
+import 'package:tender_sims/survey/concretegames/concretesteps/QuestionStepPriceZipperVolume.dart';
 
 class w4g3 extends ISurveyConnector {
   @override
   List<Step> getSteps(context) {
     IInstructionStep ISTenderNationLogo = InstructionStepTenderNationLogo();
     IInstructionStep ISw4g3s1 = InstructionStepw4g3s1(context);
+    IInstructionStep ISw4g3s2 = InstructionStepw4g3s2(context);
     IQuestionStep ISQuestionStepZipper = QuestionStepPriceZipper();
 
     ICompletionStep CSEndGame = CompletionStepEndGame();
@@ -25,7 +28,9 @@ class w4g3 extends ISurveyConnector {
       ISTenderNationLogo,
       QuestionStepTeamName(),
       ISw4g3s1,
+      ISw4g3s2,
       ISQuestionStepZipper,
+      QuestionStepPriceZipperVolume(),
       CSEndGame
     ];
   }

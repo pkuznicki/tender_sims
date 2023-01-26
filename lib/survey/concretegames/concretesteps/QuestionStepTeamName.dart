@@ -8,9 +8,14 @@ class QuestionStepTeamName extends IQuestionStep {
       : super(
           stepIdentifier: StepIdentifier(id: 'team_name'),
           title: 'Please Choose a Name for your Team.',
-          answerFormat: TextAnswerFormat(
-            maxLines: 1,
-            validationRegEx: "^(?!\s*\$).+",
+          answerFormat: const SingleChoiceAnswerFormat(
+            textChoices: [
+              TextChoice(text: 'Polaris Labs', value: 'polaris'),
+              TextChoice(text: 'River Pharma', value: 'river'),
+              TextChoice(text: 'Beach BioScience', value: 'beach'),
+              TextChoice(text: 'Sunset Pharma', value: 'sunset'),
+              TextChoice(text: 'Centerfield Inc.', value: 'centerfield'),
+            ],
           ),
         );
 }
