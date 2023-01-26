@@ -67,16 +67,19 @@ class SurveyWidget extends StatelessWidget {
                       String id = id_no_null(sr.id?.id);
                       if (id != 'team_name') {
                         map_result[id] = qr.result.toString();
+                      } else {
+                        map_result[id] = qr.result;
                       }
                     }
                   }
 
-                  TextChoice team_name = map_result['team_name'];
-
+                  TextChoice tc_team_name = map_result['team_name'];
+                  map_result['team_name_str'] = tc_team_name.value;
                   map_result['game_id'] = game_id_prv;
                   map_result['ts'] = Timestamp.now();
 
-                  String team_id = id_no_null(map_result['team_name']);
+                  String team_id = id_no_null(map_result['team_name_str']);
+                  map_result.remove('team_name');
 
                   //Write results
                   final docRef_survey = FirebaseFirestore.instance
