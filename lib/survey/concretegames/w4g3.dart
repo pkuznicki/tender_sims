@@ -13,6 +13,7 @@ import 'package:tender_sims/survey/helpers/helper.dart';
 import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepw4g3s1.dart';
 import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepw4g3s2.dart';
 import 'package:tender_sims/survey/concretegames/concretesteps/QuestionStepPriceZipperVolume.dart';
+import 'package:tender_sims/survey/concretegames/concretesteps/QuestionStepQualitativeCriteria.dart';
 
 class w4g3 extends ISurveyConnector {
   @override
@@ -31,6 +32,7 @@ class w4g3 extends ISurveyConnector {
       ISw4g3s2,
       ISQuestionStepZipper,
       QuestionStepPriceZipperVolume(volume: 3000000),
+      QualitativeCriteria(),
       CSEndGame
     ];
   }

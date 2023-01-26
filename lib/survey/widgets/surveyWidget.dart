@@ -65,7 +65,7 @@ class SurveyWidget extends StatelessWidget {
                   for (StepResult sr in result.results) {
                     for (QuestionResult qr in sr.results) {
                       String id = id_no_null(sr.id?.id);
-                      if (id != 'team_name') {
+                      if ((id != 'team_name') && (id != 'qual_crit')) {
                         map_result[id] = qr.result.toString();
                       } else {
                         map_result[id] = qr.result;
@@ -74,12 +74,18 @@ class SurveyWidget extends StatelessWidget {
                   }
 
                   TextChoice tc_team_name = map_result['team_name'];
+
                   map_result['team_name_str'] = tc_team_name.value;
                   map_result['game_id'] = game_id_prv;
                   map_result['ts'] = Timestamp.now();
+                  map_result['qual_crit_str'] = '';
+                  for (TextChoice tc in map_result['qual_crit']) {
+                    map_result['qual_crit_str'] = tc.value + ',';
+                  }
 
                   String team_id = id_no_null(map_result['team_name_str']);
                   map_result.remove('team_name');
+                  map_result.remove('qual_crit');
 
                   //Write results
                   final docRef_survey = FirebaseFirestore.instance

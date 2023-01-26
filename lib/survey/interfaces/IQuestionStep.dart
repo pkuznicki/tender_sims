@@ -4,5 +4,6 @@ abstract class IQuestionStep extends QuestionStep {
   IQuestionStep(
       {super.title,
       required super.answerFormat,
-      required super.stepIdentifier});
+      required super.stepIdentifier,
+      super.isOptional});
 }
