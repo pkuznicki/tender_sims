@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
 import 'package:tender_sims/survey/helpers/helper.dart';
 import 'package:tender_sims/survey/widgets/adminResultWidget.dart';
+import 'package:tender_sims/survey/widgets/welcomeWidget.dart';
 import 'firebase_options.dart';
 import 'survey/interfaces/ISurveyConnector.dart';
 import 'package:tender_sims/survey/widgets/surveyWidget.dart';
@@ -14,6 +15,7 @@ import 'survey/concretegames/concretesteps/QuestionStepTeamName.dart';
 import 'package:tender_sims/survey/widgets/adminWidget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tender_sims/survey/helpers/maps.dart';
+import 'package:tender_sims/survey/widgets/sampleChart.dart';
 
 // TODO
 // Add results won revenue and color coding
@@ -72,12 +74,20 @@ class _MyAppState extends State<MyApp> {
     // add homepage
     routes.add(GoRoute(
       path: '/',
-      builder: (BuildContext context, GoRouterState state) => AdminScreen(),
+      builder: (BuildContext context, GoRouterState state) => WelcomeScreen(
+        game_id_prv,
+      ),
     ));
     // add admin route
     routes.add(GoRoute(
       path: '/admin',
       builder: (BuildContext context, GoRouterState state) => AdminScreen(),
+    ));
+    // add sample route
+    routes.add(GoRoute(
+      path: '/sample',
+      builder: (BuildContext context, GoRouterState state) =>
+          GroupedBarChart.withSampleData(),
     ));
 
     _router = GoRouter(routes: routes);

@@ -77,9 +77,11 @@ class SurveyWidget extends StatelessWidget {
                   map_result['team_name_str'] = tc_team_name.value;
                   map_result['game_id'] = game_id_prv;
                   map_result['ts'] = Timestamp.now();
-                  map_result['qual_crit_str'] = '';
-                  for (TextChoice tc in map_result['qual_crit']) {
-                    map_result['qual_crit_str'] = tc.value + ',';
+                  map_result['qual_crit_str'] = 'no_data';
+                  if (map_result.containsKey('qual_crit')) {
+                    for (TextChoice tc in map_result['qual_crit']) {
+                      map_result['qual_crit_str'] = tc.value + ',';
+                    }
                   }
 
                   String team_id = id_no_null(map_result['team_name_str']);

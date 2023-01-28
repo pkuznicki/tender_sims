@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tender_sims/business/calculationSingle.dart';
 import 'package:tender_sims/survey/helpers/result.dart';
 import 'package:tender_sims/survey/helpers/textutils.dart';
 import 'package:tender_sims/survey/widgets/chartWidget.dart' as chart;
 import 'package:tender_sims/survey/widgets/playChart.dart';
-import 'playerSeries.dart';
+import 'package:tender_sims/survey/widgets/sampleChart.dart';
+
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:tender_sims/survey/interfaces/ICalculation.dart';
 
 class ResultScreen extends StatefulWidget {
   String game_id_prv = 'no_game_id';
@@ -21,12 +24,9 @@ class ResultScreen extends StatefulWidget {
 }
 
 class ResultScreenState extends State<ResultScreen> {
-  late QuerySnapshot data_chart;
-  List<PlayerSeries> result_data = [];
-  double price_winning = 10000;
-  String team_winning = 'no_team';
-  double value_winning = 0;
+  List<charts.Series<OrdinalSales, String>> result_data = [];
   String game_id_prv = 'no_game_id';
+  String title = 'no_title';
 
   ResultScreenState({required String game_id}) {
     game_id_prv = game_id;
@@ -38,33 +38,9 @@ class ResultScreenState extends State<ResultScreen> {
         FirebaseFirestore.instance.collection(game_id_prv);
 
     collectionRef.get().then((qs) {
-      data_chart = qs;
-
-      // Get Single Winner
-      qs.docs.forEach(
-        (team_result) {
-          double price = double.parse(team_result['price_zipper']);
-          if (price < price_winning) {
-            price_winning = price;
-            value_winning = price * 1000000;
-            team_winning = team_result['team_name_str'];
-          }
-        },
-      );
-      data_chart.docs.forEach(
-        (team_result) {
-          charts.Color color_bar = charts.ColorUtil.fromDartColor(Colors.red);
-          if (team_result['team_name_str'] == team_winning) {
-            color_bar = charts.ColorUtil.fromDartColor(Colors.green);
-          }
-          result_data.add(
-            PlayerSeries(
-                team_name: team_result['team_name_str'],
-                price: double.parse(team_result['price_zipper']),
-                barColor: color_bar),
-          );
-        },
-      );
+      CalculationSingle cs = CalculationSingle(qs);
+      result_data = cs.getSeries();
+      this.title = cs.getTitle();
       setState(() {});
     });
 
@@ -83,11 +59,31 @@ class ResultScreenState extends State<ResultScreen> {
           Container(
             height: 10,
           ),
-          Text(style: TextStyle(fontSize: 20), 'Winning Team: ' + team_winning),
-          Text(
-              style: TextStyle(fontSize: 20),
-              'Awarded Value: ' + value_winning.toString()),
-          chart.HomeView(data: result_data),
+          Text(style: TextStyle(fontSize: 20), 'Winning Team: $title'),
+          Container(
+            height: 500,
+            width: 1000,
+            child: charts.BarChart(
+              vertical: false,
+              result_data,
+              animate: true,
+              barRendererDecorator: new charts.BarLabelDecorator<String>(),
+              behaviors: [
+                charts.SeriesLegend(
+                  position: charts.BehaviorPosition.end,
+                  outsideJustification: charts.OutsideJustification.endDrawArea,
+                  horizontalFirst: false,
+                  desiredMaxRows: 2,
+                  cellPadding: const EdgeInsets.only(right: 4.0, bottom: 4.0),
+                  entryTextStyle: const charts.TextStyleSpec(
+                      color: charts.Color(r: 127, g: 63, b: 191),
+                      fontFamily: 'Georgia',
+                      fontSize: 11),
+                )
+              ],
+              barGroupingType: charts.BarGroupingType.grouped,
+            ),
+          )
         ],
       )),
     );
