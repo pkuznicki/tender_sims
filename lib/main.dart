@@ -64,7 +64,9 @@ class _MyAppState extends State<MyApp> {
       // add results route
       routes.add(GoRoute(
         path: '/results/$key',
-        builder: (BuildContext context, GoRouterState state) => ResultScreen(),
+        builder: (BuildContext context, GoRouterState state) => ResultScreen(
+          game_id: key,
+        ),
       ));
     });
     // add homepage
