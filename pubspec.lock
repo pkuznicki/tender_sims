@@ -209,7 +209,7 @@ packages:
     source: sdk
     version: "0.0.0"
   go_router:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: go_router
       sha256: aec1999abe8b2f131eda46d4c9629048fb1befed2b65e90b73f9193a300ce489

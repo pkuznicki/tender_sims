@@ -5,13 +5,15 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
+import 'package:tender_sims/survey/helpers/helper.dart';
 import 'package:tender_sims/survey/widgets/adminResultWidget.dart';
 import 'firebase_options.dart';
 import 'survey/interfaces/ISurveyConnector.dart';
-import 'survey/concretegames/TenderSimsGame01.dart';
 import 'package:tender_sims/survey/widgets/surveyWidget.dart';
 import 'survey/concretegames/concretesteps/QuestionStepTeamName.dart';
 import 'package:tender_sims/survey/widgets/adminWidget.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tender_sims/survey/helpers/maps.dart';
 
 // TODO
 // Add results won revenue and color coding
@@ -44,24 +46,56 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String game_id_prv = 'no game_id';
+
+  List<GoRoute> routes = [];
+  late GoRouter _router;
+
+  @override
+  void initState() {
+    String game_id = 'no_game_id';
+
+    //add routes for game ids
+    maps.map_games.forEach((key, value) {
+      routes.add(GoRoute(
+        path: '/$key',
+        builder: (BuildContext context, GoRouterState state) =>
+            SurveyWidget(key),
+      ));
+      // add results route
+      routes.add(GoRoute(
+        path: '/results/$key',
+        builder: (BuildContext context, GoRouterState state) => ResultScreen(),
+      ));
+    });
+    // add homepage
+    routes.add(GoRoute(
+      path: '/',
+      builder: (BuildContext context, GoRouterState state) => AdminScreen(),
+    ));
+    // add admin route
+    routes.add(GoRoute(
+      path: '/admin',
+      builder: (BuildContext context, GoRouterState state) => AdminScreen(),
+    ));
+
+    _router = GoRouter(routes: routes);
+    super.initState();
+  }
+
   _MyAppState(String game_id) {
     game_id_prv = game_id;
   }
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
+      routeInformationProvider: _router.routeInformationProvider,
+      routeInformationParser: _router.routeInformationParser,
+      routerDelegate: _router.routerDelegate,
+
       title: 'Tender Simulations Game ## SIMS ##',
       // Start the app with the "/" named route. In this case, the app starts
       // on the FirstScreen widget.
-      initialRoute: '/',
-      routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => Scaffold(body: SurveyWidget(game_id_prv)),
-        // When navigating to the "/second" route, build the SecondScreen widget.
-        '/admin': (context) => const AdminScreen(),
-        '/results': (context) => const ResultsScreen(),
-      },
     );
   }
 

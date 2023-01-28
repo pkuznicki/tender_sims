@@ -10,7 +10,6 @@ import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
 import 'package:tender_sims/survey/concretegames/w1g2.dart';
 import '../interfaces/ISurveyConnector.dart';
-import 'package:tender_sims/survey/concretegames/TenderSimsGame01.dart' as game;
 import 'package:tender_sims/survey/concretegames/w1g1.dart' as w1g1;
 import 'package:tender_sims/survey/concretegames/w1g0.dart' as w1g0;
 import 'package:tender_sims/survey/concretegames/w1g2.dart' as w1g2;
@@ -214,7 +213,7 @@ class SurveyWidget extends StatelessWidget {
 }
 
 Future<Task> getTask(BuildContext context, String game_id) {
-  ISurveyConnector tendersurvey = game.TenderSimsGame01();
+  ISurveyConnector tendersurvey = w1g0.w1g0();
 
   if (game_id == 'w1g0') {
     tendersurvey = w1g0.w1g0();

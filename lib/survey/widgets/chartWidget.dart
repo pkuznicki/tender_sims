@@ -9,11 +9,9 @@ class HomeView extends StatelessWidget {
   HomeView({Key? key, required this.data}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-          child: PlayerChart(
-        data: data,
-      )),
-    );
+    return Center(
+        child: PlayerChart(
+      data: data,
+    ));
   }
 }
