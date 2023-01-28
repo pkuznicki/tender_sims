@@ -34,34 +34,32 @@ class ResultScreenState extends State<ResultScreen> {
 
   @override
   void initState() {
-    // Get Game ID
-
     CollectionReference collectionRef =
-        FirebaseFirestore.instance.collection('w1g1');
+        FirebaseFirestore.instance.collection(game_id_prv);
 
     collectionRef.get().then((qs) {
       data_chart = qs;
 
       // Get Single Winner
-      data_chart.docs.forEach(
+      qs.docs.forEach(
         (team_result) {
           double price = double.parse(team_result['price_zipper']);
           if (price < price_winning) {
             price_winning = price;
             value_winning = price * 1000000;
-            team_winning = team_result['team_name'];
+            team_winning = team_result['team_name_str'];
           }
         },
       );
       data_chart.docs.forEach(
         (team_result) {
           charts.Color color_bar = charts.ColorUtil.fromDartColor(Colors.red);
-          if (team_result['team_name'] == team_winning) {
+          if (team_result['team_name_str'] == team_winning) {
             color_bar = charts.ColorUtil.fromDartColor(Colors.green);
           }
           result_data.add(
             PlayerSeries(
-                team_name: team_result['team_name'],
+                team_name: team_result['team_name_str'],
                 price: double.parse(team_result['price_zipper']),
                 barColor: color_bar),
           );
