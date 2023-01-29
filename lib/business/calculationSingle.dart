@@ -46,7 +46,7 @@ class CalculationSingle implements ICalculation {
     qs.docs.forEach(
       (team_result) {
         double price = double.parse(team_result['price_zipper']);
-        int volume = int.parse(team_result['price_zipper_volume']);
+        int volume = 1000000;
         String team_name = team_result['team_name_str'];
         double cogs = Constants.get_cogs(team_id: team_name);
 

@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:go_router/go_router.dart';
+import 'package:tender_sims/survey/helpers/maps.dart';
 import 'package:tender_sims/survey/widgets/adminResultWidget.dart';
 import 'package:tender_sims/survey/helpers/result.dart';
 import 'playerSeries.dart';
+import 'dart:html' as html;
 
 class AdminScreen extends StatefulWidget {
   @override
@@ -14,6 +17,7 @@ class AdminScreen extends StatefulWidget {
 class AdminScreenState extends State<AdminScreen> {
   String game_id = 'no_game_id';
   String page_route = 'no_route';
+  List<Widget> lst_game_buttons = [];
 
   @override
   void initState() {
@@ -25,42 +29,76 @@ class AdminScreenState extends State<AdminScreen> {
     docRef_settings.get().then((DocumentSnapshot doc) {
       game_id = doc['game_id'];
 
-      Map<String, String> get_route = {
-        'w1g1': '/results',
-        'w1g2': '/results',
-        'w1g3': '/results',
-        'w2g1': '/results2',
-        'w2g2': '/results2',
-        'w2g3': '/results2',
-        'w3g1': '/results3',
-        'w3g2': '/results3',
-        'w3g3': '/results3',
-        'w4g1': '/results4',
-        'w4g2': '/results4',
-        'w4g3': '/results4',
-      };
-      if (get_route[game_id] != null) {
-        page_route = get_route[game_id] as String;
-      }
+      maps().games().forEach((key, value) {
+        lst_game_buttons.add(Column(
+          children: [
+            Container(
+              height: 5,
+            ),
+            Container(
+              height: 20,
+              width: 300,
+              child: ElevatedButton(
+                onPressed: () async {
+                  await docRef_settings.set({'game_id': key}).then((value) {
+                    html.window.location.reload();
+                  });
+                },
+                child: Text(value),
+              ),
+            ),
+          ],
+        ));
+      });
+      setState(() {});
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Tender Sims Admin Screen'),
+      appBar: AppBar(
+        title: const Text('Tender Sims Admin Screen'),
+      ),
+      body: Center(
+        child: Row(
+          children: [
+            Container(
+              width: 300,
+            ),
+            Column(
+              children: [
+                Container(
+                  height: 25,
+                ),
+                Text(
+                  'Current Game: $game_id',
+                  style: TextStyle(fontSize: 20),
+                ),
+                Container(
+                  height: 25,
+                ),
+                Container(
+                  height: 50,
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.go('/results/$game_id');
+                    },
+                    child: Text('See Results'),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              width: 50,
+            ),
+            Column(
+              children: lst_game_buttons,
+            )
+          ],
         ),
-        body: Center(
-            child: Container(
-                height: 50,
-                width: 100,
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushNamed(page_route, arguments: game_id);
-                  },
-                  child: Text('See Results'),
-                ))));
+      ),
+    );
   }
 }
