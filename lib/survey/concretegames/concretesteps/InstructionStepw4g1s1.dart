@@ -12,7 +12,7 @@ class InstructionStepw4g1s1 extends IInstructionStep {
                 style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
               ),
               Image.asset(
-                'assets/tn_w4g2s1.png',
+                'assets/tn_w4g1s1.png',
                 scale: 2,
               ),
             ])),
@@ -22,7 +22,7 @@ class InstructionStepw4g1s1 extends IInstructionStep {
                   '''''',
                   textAlign: TextAlign.justify,
                 )),
-            id: StepIdentifier(id: 'is_w4g2s1'),
+            id: StepIdentifier(id: 'is_w4g1s1'),
             title: 'Tender 11: National, MEAT & multiple awardees tender',
             text: '');
 }
