@@ -1,5 +1,5 @@
-class Constants {
-  static get_cogs({required String team_id}) {
+class tnConstants {
+  static double get_cogs({required String team_id}) {
     Map<String, double> result = {
       'polaris': 11,
       'river': 10,
@@ -7,10 +7,34 @@ class Constants {
       'sunset': 8,
       'centerfield': 7
     };
-    return result[team_id];
+
+    return result[team_id] ?? 0;
   }
 
-  static get_points_map({required String team_id}) {
+  static Map<String, double> get_qc_weight_map() {
+    Map<String, double> result = {
+      'product_packaging': 0.2,
+      'delivery_time': 0.16,
+      'payment_terms': 0.1,
+      'customer_support': 0.24,
+      'patient_support': 0.3
+    };
+    return result;
+  }
+
+  static Map<String, String> get_team_names() {
+    Map<String, String> result = {
+      'polaris': 'Polaris',
+      'river': 'River',
+      'beach': 'Beach',
+      'sunset': 'Sunset Pharma',
+      'centerfield': 'Centerfield'
+    };
+
+    return result;
+  }
+
+  static Map<String, Map<String, double>> get_points_map() {
     Map<String, Map<String, double>> result = {
       'polaris': {
         'product_packaging': 5,
@@ -49,6 +73,6 @@ class Constants {
       },
     };
 
-    return result[team_id];
+    return result;
   }
 }

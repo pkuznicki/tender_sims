@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:go_router/go_router.dart';
+import 'package:tender_sims/survey/helpers/helper.dart';
 import 'package:tender_sims/survey/helpers/maps.dart';
 import 'package:tender_sims/survey/widgets/adminResultWidget.dart';
 import 'package:tender_sims/survey/helpers/result.dart';
@@ -16,6 +17,7 @@ class AdminScreen extends StatefulWidget {
 
 class AdminScreenState extends State<AdminScreen> {
   String game_id = 'no_game_id';
+  String game_name = 'No Game';
   String page_route = 'no_route';
   List<Widget> lst_game_buttons = [];
 
@@ -28,6 +30,7 @@ class AdminScreenState extends State<AdminScreen> {
         FirebaseFirestore.instance.collection("settings").doc("main");
     docRef_settings.get().then((DocumentSnapshot doc) {
       game_id = doc['game_id'];
+      game_name = maps.map_games[game_id] ?? 'No Game';
 
       maps().games().forEach((key, value) {
         lst_game_buttons.add(Column(
@@ -41,7 +44,10 @@ class AdminScreenState extends State<AdminScreen> {
               child: ElevatedButton(
                 onPressed: () async {
                   await docRef_settings.set({'game_id': key}).then((value) {
-                    html.window.location.reload();
+                    game_id = key;
+                    game_name = maps.map_games[game_id] ?? 'No Game';
+                    setState(() {});
+                    //html.window.location.reload();
                   });
                 },
                 child: Text(value),
@@ -72,7 +78,7 @@ class AdminScreenState extends State<AdminScreen> {
                   height: 25,
                 ),
                 Text(
-                  'Current Game: $game_id',
+                  'Current Game: $game_name',
                   style: TextStyle(fontSize: 20),
                 ),
                 Container(

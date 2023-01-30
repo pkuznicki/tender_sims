@@ -248,7 +248,7 @@ Future<Task> getTask(BuildContext context, String game_id) {
     tendersurvey = w3g1.w3g1();
   }
   if (game_id == 'w3g2') {
-    tendersurvey = w2g3.w2g3();
+    tendersurvey = w3g2.w3g2();
   }
   if (game_id == 'w3g3') {
     tendersurvey = w3g3.w3g3();
@@ -260,7 +260,7 @@ Future<Task> getTask(BuildContext context, String game_id) {
     tendersurvey = w4g1.w4g1();
   }
   if (game_id == 'w4g2') {
-    tendersurvey = w4g3.w4g3();
+    tendersurvey = w4g2.w4g2();
   }
   if (game_id == 'w4g3') {
     tendersurvey = w4g3.w4g3();

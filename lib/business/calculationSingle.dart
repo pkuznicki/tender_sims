@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tender_sims/survey/helpers/maps.dart';
 import 'package:tender_sims/survey/helpers/result.dart';
 import 'package:tender_sims/survey/helpers/textutils.dart';
 import 'package:tender_sims/survey/interfaces/ICalculation.dart';
@@ -11,7 +12,8 @@ import 'package:tender_sims/survey/widgets/playChart.dart';
 import 'package:tender_sims/survey/widgets/playerSeries.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
-import 'package:tender_sims/business/constants.dart';
+import 'package:tender_sims/business/constants.dart' as tn_const;
+import 'package:tender_sims/survey/helpers/sort.dart';
 
 class CalculationSingle implements ICalculation {
   late QuerySnapshot qs;
@@ -32,7 +34,10 @@ class CalculationSingle implements ICalculation {
     List<OrdinalSales> cogsdata = [];
     List<OrdinalSales> profitdata = [];
 
-    // Get Single Winner
+    // // //
+    // Calculate single winner wave 1
+    //
+
     if (game_id_prv.substring(1, 2) == '1') {
       qs.docs.forEach(
         (team_result) {
@@ -44,28 +49,28 @@ class CalculationSingle implements ICalculation {
           }
         },
       );
-    }
 
-    qs.docs.forEach(
-      (team_result) {
-        double price = double.parse(team_result['price_zipper']);
-        int volume = 1000000;
-        String team_name = team_result['team_name_str'];
-        double cogs = Constants.get_cogs(team_id: team_name);
+      qs.docs.forEach(
+        (team_result) {
+          double price = double.parse(team_result['price_zipper']);
+          int volume = 1000000;
+          String team_name = team_result['team_name_str'];
+          double cogs = tn_const.tnConstants.get_cogs(team_id: team_name);
 
-        salesdata.add(
-          OrdinalSales(team_name, (volume * price).round()),
-        );
+          salesdata.add(
+            OrdinalSales(team_name, (volume * price).round()),
+          );
 
-        cogsdata.add(
-          OrdinalSales(team_name, (volume * cogs).round()),
-        );
+          cogsdata.add(
+            OrdinalSales(team_name, (volume * cogs).round()),
+          );
 
-        profitdata.add(
-          OrdinalSales(team_name, (volume * (price - cogs)).round()),
-        );
-      },
-    );
+          profitdata.add(
+            OrdinalSales(team_name, (volume * (price - cogs)).round()),
+          );
+        },
+      );
+    } // eo single winner
 
     return [
       charts.Series<OrdinalSales, String>(
@@ -89,7 +94,7 @@ class CalculationSingle implements ICalculation {
           labelAccessorFn: (OrdinalSales sales, _) =>
               '${sales.sales.toString()}',
           colorFn: (OrdinalSales sales, _) {
-            if (sales.year == 'river') {
+            if (sales.year == team_winning) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade100);
             }
             return charts.ColorUtil.fromDartColor(Colors.blue.shade100);
@@ -102,7 +107,7 @@ class CalculationSingle implements ICalculation {
           labelAccessorFn: (OrdinalSales sales, _) =>
               '${sales.sales.toString()}',
           colorFn: (OrdinalSales sales, _) {
-            if (sales.year == 'river') {
+            if (sales.year == team_winning) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade50);
             }
             return charts.ColorUtil.fromDartColor(Colors.blue.shade50);
@@ -112,10 +117,6 @@ class CalculationSingle implements ICalculation {
 
   @override
   String getTitle() {
-    if (game_id_prv.substring(1, 2) == '1') {
-      return team_winning;
-    } else {
-      return 'No winning Team!';
-    }
+    return team_winning;
   }
 }

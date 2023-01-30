@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:tender_sims/survey/helpers/maps.dart';
 import 'package:tender_sims/survey/helpers/result.dart';
 import 'package:tender_sims/survey/helpers/textutils.dart';
 import 'package:tender_sims/survey/interfaces/ICalculation.dart';
@@ -11,18 +12,21 @@ import 'package:tender_sims/survey/widgets/playChart.dart';
 import 'package:tender_sims/survey/widgets/playerSeries.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
-import 'package:tender_sims/business/constants.dart';
+import 'package:tender_sims/business/constants.dart' as tn_const;
+import 'package:tender_sims/survey/helpers/sort.dart';
 
-class calculationQualitative implements ICalculation {
+class CalculationSingle implements ICalculation {
   late QuerySnapshot qs;
   List<charts.Series<OrdinalSales, String>> result_data = [];
-  double price_winning = 10000;
-  String team_winning = 'no_team';
-  double value_winning = 0;
   String game_id_prv = 'no_game_id';
+  Map<String, double> team_qc_norm_score = {};
+  Map<String, double> team_perceived_bp = {};
+  List<MapEntry<String, dynamic>> winners = [];
+  Map<String, int> awarded_volumes = {};
 
-  calculationQualitative(QuerySnapshot qs) {
+  CalculationSingle({required QuerySnapshot qs, required String game_id}) {
     this.qs = qs;
+    this.game_id_prv = game_id;
   }
 
   @override
@@ -31,24 +35,59 @@ class calculationQualitative implements ICalculation {
     List<OrdinalSales> cogsdata = [];
     List<OrdinalSales> profitdata = [];
 
-    // Get Normalized Qualitative Scores
-    qs.docs.forEach(
-      (team_result) {
-        double price = double.parse(team_result['price_zipper']);
-        if (price < price_winning) {
-          price_winning = price;
-          value_winning = price * 1000000;
-          team_winning = team_result['team_name_str'];
+    // // //
+    // Calculate qualitiative criteria Wave 4
+    //
+
+    if (game_id_prv.substring(1, 2) == '4') {
+      tn_const.tnConstants.get_team_names().forEach((team_id, team_name) {
+        double team_norm_score = 0;
+        tn_const.tnConstants.get_qc_weight_map().forEach((crit, weight) {
+          double score =
+              ((tn_const.tnConstants.get_points_map)()[team_id]?[crit] ?? 0);
+
+          team_norm_score = team_norm_score + weight * (score - 1) / 5;
+        });
+        team_qc_norm_score[team_id] = team_norm_score;
+        team_perceived_bp[team_id] = (1 - team_norm_score);
+      });
+
+      // Calluate perceived bidding price
+      qs.docs.forEach(
+        (team_result) {
+          double price = double.parse(team_result['price_zipper']);
+          team_perceived_bp[team_result['team_name_str']] =
+              team_perceived_bp[team_result['team_name_str']] ?? -1 * price;
+        },
+      );
+
+      // Order by perceived bidding price
+      Map<String, double> map = {};
+      qs.docs.forEach((team_result) {
+        String team_id = team_result['team_name_str'];
+        map[team_id] = team_perceived_bp[team_id] ?? -1;
+      });
+
+      winners = Sort.sortMapByValue(map);
+
+      // Calculate Awarded Volumes
+      awarded_volumes[winners[0].key] = (3000000 * 0.5).round();
+      awarded_volumes[winners[1].key] = (3000000 * 0.3).round();
+      awarded_volumes[winners[2].key] = (3000000 * 0.2).round();
+      // Add lossing teams
+      tn_const.tnConstants.get_team_names().forEach((team_id, team_name) {
+        if (awarded_volumes.containsKey(team_id) == false) {
+          awarded_volumes[team_id] = 0;
         }
-      },
-    );
+      });
+    }
 
     qs.docs.forEach(
       (team_result) {
         double price = double.parse(team_result['price_zipper']);
-        int volume = 1000000;
         String team_name = team_result['team_name_str'];
-        double cogs = Constants.get_cogs(team_id: team_name);
+        int volume = awarded_volumes[team_name] ?? -1;
+        double cogs = tn_const.tnConstants.get_cogs(team_id: team_name);
 
         salesdata.add(
           OrdinalSales(team_name, (volume * price).round()),
@@ -73,19 +112,20 @@ class calculationQualitative implements ICalculation {
           labelAccessorFn: (OrdinalSales sales, _) =>
               '${sales.sales.toString()}',
           colorFn: (OrdinalSales sales, _) {
-            if (sales.year == team_winning) {
+            if (Map.fromIterable(winners).keys.contains(sales.year)) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade300);
             }
             return charts.ColorUtil.fromDartColor(Colors.blue.shade300);
           }),
       charts.Series<OrdinalSales, String>(
-          id: 'Cogs',
+          id: 'Costs',
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: cogsdata,
-          labelAccessorFn: (OrdinalSales sales, _) => '',
+          labelAccessorFn: (OrdinalSales sales, _) =>
+              '${sales.sales.toString()}',
           colorFn: (OrdinalSales sales, _) {
-            if (sales.year == 'river') {
+            if (Map.fromIterable(winners).keys.contains(sales.year)) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade100);
             }
             return charts.ColorUtil.fromDartColor(Colors.blue.shade100);
@@ -95,9 +135,10 @@ class calculationQualitative implements ICalculation {
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: profitdata,
-          labelAccessorFn: (OrdinalSales sales, _) => '',
+          labelAccessorFn: (OrdinalSales sales, _) =>
+              '${sales.sales.toString()}',
           colorFn: (OrdinalSales sales, _) {
-            if (sales.year == 'river') {
+            if (Map.fromIterable(winners).keys.contains(sales.year)) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade50);
             }
             return charts.ColorUtil.fromDartColor(Colors.blue.shade50);
@@ -107,6 +148,6 @@ class calculationQualitative implements ICalculation {
 
   @override
   String getTitle() {
-    return team_winning;
+    return Map.fromIterable(winners).keys.toString();
   }
 }
