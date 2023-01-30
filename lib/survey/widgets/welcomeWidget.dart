@@ -26,7 +26,7 @@ class WelcomeScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        foregroundColor: Colors.blue.shade800,
         title: const Text('Tender Simulations Game ## SIMS ##'),
       ),
       body: Center(
@@ -62,6 +62,8 @@ class WelcomeScreen extends StatelessWidget {
               height: 50,
               width: 300,
               child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue.shade800),
                 onPressed: () {
                   context.go('/$game_id_prv');
                 },

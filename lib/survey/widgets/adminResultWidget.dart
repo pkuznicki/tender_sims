@@ -38,7 +38,7 @@ class ResultScreenState extends State<ResultScreen> {
         FirebaseFirestore.instance.collection(game_id_prv);
 
     collectionRef.get().then((qs) {
-      CalculationSingle cs = CalculationSingle(qs);
+      CalculationSingle cs = CalculationSingle(qs: qs, game_id: game_id_prv);
       result_data = cs.getSeries();
       this.title = cs.getTitle();
       setState(() {});

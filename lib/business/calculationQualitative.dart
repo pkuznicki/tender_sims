@@ -13,7 +13,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
 import 'package:tender_sims/business/constants.dart';
 
-class CalculationSingle implements ICalculation {
+class calculationQualitative implements ICalculation {
   late QuerySnapshot qs;
   List<charts.Series<OrdinalSales, String>> result_data = [];
   double price_winning = 10000;
@@ -21,9 +21,8 @@ class CalculationSingle implements ICalculation {
   double value_winning = 0;
   String game_id_prv = 'no_game_id';
 
-  CalculationSingle({required QuerySnapshot qs, required String game_id}) {
+  calculationQualitative(QuerySnapshot qs) {
     this.qs = qs;
-    this.game_id_prv = game_id;
   }
 
   @override
@@ -32,19 +31,17 @@ class CalculationSingle implements ICalculation {
     List<OrdinalSales> cogsdata = [];
     List<OrdinalSales> profitdata = [];
 
-    // Get Single Winner
-    if (game_id_prv.substring(1, 2) == '1') {
-      qs.docs.forEach(
-        (team_result) {
-          double price = double.parse(team_result['price_zipper']);
-          if (price < price_winning) {
-            price_winning = price;
-            value_winning = price * 1000000;
-            team_winning = team_result['team_name_str'];
-          }
-        },
-      );
-    }
+    // Get Normalized Qualitative Scores
+    qs.docs.forEach(
+      (team_result) {
+        double price = double.parse(team_result['price_zipper']);
+        if (price < price_winning) {
+          price_winning = price;
+          value_winning = price * 1000000;
+          team_winning = team_result['team_name_str'];
+        }
+      },
+    );
 
     qs.docs.forEach(
       (team_result) {
@@ -82,12 +79,11 @@ class CalculationSingle implements ICalculation {
             return charts.ColorUtil.fromDartColor(Colors.blue.shade300);
           }),
       charts.Series<OrdinalSales, String>(
-          id: 'Costs',
+          id: 'Cogs',
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: cogsdata,
-          labelAccessorFn: (OrdinalSales sales, _) =>
-              '${sales.sales.toString()}',
+          labelAccessorFn: (OrdinalSales sales, _) => '',
           colorFn: (OrdinalSales sales, _) {
             if (sales.year == 'river') {
               return charts.ColorUtil.fromDartColor(Colors.green.shade100);
@@ -99,8 +95,7 @@ class CalculationSingle implements ICalculation {
           domainFn: (OrdinalSales sales, _) => sales.year,
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: profitdata,
-          labelAccessorFn: (OrdinalSales sales, _) =>
-              '${sales.sales.toString()}',
+          labelAccessorFn: (OrdinalSales sales, _) => '',
           colorFn: (OrdinalSales sales, _) {
             if (sales.year == 'river') {
               return charts.ColorUtil.fromDartColor(Colors.green.shade50);
@@ -112,10 +107,6 @@ class CalculationSingle implements ICalculation {
 
   @override
   String getTitle() {
-    if (game_id_prv.substring(1, 2) == '1') {
-      return team_winning;
-    } else {
-      return 'No winning Team!';
-    }
+    return team_winning;
   }
 }
