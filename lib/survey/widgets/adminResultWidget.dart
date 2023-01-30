@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tender_sims/business/calculationSingle.dart';
 import 'package:tender_sims/business/calculationQualitative.dart';
+import 'package:tender_sims/business/calculationMultiplePercent.dart';
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/interfaces/ICalculation.dart';
@@ -37,6 +38,12 @@ class ResultScreenState extends State<ResultScreen> {
       // Calculation Wave 1
       if (game_id_prv.substring(1, 2) == '1') {
         cs = CalculationSingle(qs: qs, game_id: game_id_prv);
+        result_data = cs.getSeries();
+        this.title = cs.getTitle();
+      }
+      // Calculation Wave3
+      if (game_id_prv.substring(1, 2) == '3') {
+        cs = CalculationMultiplePercent(qs: qs, game_id: game_id_prv);
         result_data = cs.getSeries();
         this.title = cs.getTitle();
       }
