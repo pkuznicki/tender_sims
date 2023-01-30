@@ -1,14 +1,8 @@
 import 'package:flutter/material.dart';
-import 'dart:convert';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tender_sims/business/calculationSingle.dart';
-import 'package:tender_sims/survey/helpers/result.dart';
-import 'package:tender_sims/survey/helpers/textutils.dart';
-import 'package:tender_sims/survey/widgets/chartWidget.dart' as chart;
-import 'package:tender_sims/survey/widgets/playChart.dart';
+import 'package:tender_sims/business/calculationQualitative.dart';
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
-
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/interfaces/ICalculation.dart';
 
@@ -38,9 +32,21 @@ class ResultScreenState extends State<ResultScreen> {
         FirebaseFirestore.instance.collection(game_id_prv);
 
     collectionRef.get().then((qs) {
-      CalculationSingle cs = CalculationSingle(qs: qs, game_id: game_id_prv);
-      result_data = cs.getSeries();
-      this.title = cs.getTitle();
+      ICalculation cs;
+
+      // Calculation Wave 1
+      if (game_id_prv.substring(1, 2) == '1') {
+        cs = CalculationSingle(qs: qs, game_id: game_id_prv);
+        result_data = cs.getSeries();
+        this.title = cs.getTitle();
+      }
+      // Calculation Wave 4
+      if (game_id_prv.substring(1, 2) == '4') {
+        cs = CalculationQualitative(qs: qs, game_id: game_id_prv);
+        result_data = cs.getSeries();
+        this.title = cs.getTitle();
+      }
+
       setState(() {});
     });
 

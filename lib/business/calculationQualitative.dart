@@ -15,7 +15,7 @@ import 'package:tender_sims/survey/widgets/sampleChart.dart';
 import 'package:tender_sims/business/constants.dart' as tn_const;
 import 'package:tender_sims/survey/helpers/sort.dart';
 
-class CalculationSingle implements ICalculation {
+class CalculationQualitative implements ICalculation {
   late QuerySnapshot qs;
   List<charts.Series<OrdinalSales, String>> result_data = [];
   String game_id_prv = 'no_game_id';
@@ -24,7 +24,7 @@ class CalculationSingle implements ICalculation {
   List<MapEntry<String, dynamic>> winners = [];
   Map<String, int> awarded_volumes = {};
 
-  CalculationSingle({required QuerySnapshot qs, required String game_id}) {
+  CalculationQualitative({required QuerySnapshot qs, required String game_id}) {
     this.qs = qs;
     this.game_id_prv = game_id;
   }

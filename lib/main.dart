@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:survey_kit/survey_kit.dart';
 import 'package:tender_sims/survey/helpers/helper.dart';
 import 'package:tender_sims/survey/widgets/adminResultWidget.dart';
+import 'package:tender_sims/survey/widgets/errorWidget.dart';
 import 'package:tender_sims/survey/widgets/welcomeWidget.dart';
 import 'firebase_options.dart';
 import 'survey/interfaces/ISurveyConnector.dart';
@@ -88,6 +89,10 @@ class _MyAppState extends State<MyApp> {
       path: '/sample',
       builder: (BuildContext context, GoRouterState state) =>
           GroupedBarChart.withSampleData(),
+    ));
+    routes.add(GoRoute(
+      path: '/error',
+      builder: (BuildContext context, GoRouterState state) => errorWidget(),
     ));
 
     _router = GoRouter(routes: routes);
