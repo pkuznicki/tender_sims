@@ -6,6 +6,7 @@ import 'package:tender_sims/business/calculationMultiplePercent.dart';
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/interfaces/ICalculation.dart';
+import 'package:tender_sims/business/calculationMultipleVolume.dart';
 
 class ResultScreen extends StatefulWidget {
   String game_id_prv = 'no_game_id';
@@ -22,6 +23,7 @@ class ResultScreenState extends State<ResultScreen> {
   List<charts.Series<OrdinalSales, String>> result_data = [];
   String game_id_prv = 'no_game_id';
   String title = 'no_title';
+  bool data_exists = false;
 
   ResultScreenState({required String game_id}) {
     game_id_prv = game_id;
@@ -35,23 +37,33 @@ class ResultScreenState extends State<ResultScreen> {
     collectionRef.get().then((qs) {
       ICalculation cs;
 
-      // Calculation Wave 1
-      if (game_id_prv.substring(1, 2) == '1') {
-        cs = CalculationSingle(qs: qs, game_id: game_id_prv);
-        result_data = cs.getSeries();
-        this.title = cs.getTitle();
-      }
-      // Calculation Wave3
-      if (game_id_prv.substring(1, 2) == '3') {
-        cs = CalculationMultiplePercent(qs: qs, game_id: game_id_prv);
-        result_data = cs.getSeries();
-        this.title = cs.getTitle();
-      }
-      // Calculation Wave 4
-      if (game_id_prv.substring(1, 2) == '4') {
-        cs = CalculationQualitative(qs: qs, game_id: game_id_prv);
-        result_data = cs.getSeries();
-        this.title = cs.getTitle();
+      if (qs.size > 0) {
+        data_exists = true;
+
+        // Calculation Wave 1
+        if (game_id_prv.substring(1, 2) == '1') {
+          cs = CalculationSingle(qs: qs, game_id: game_id_prv);
+          result_data = cs.getSeries();
+          this.title = cs.getTitle();
+        }
+        // Calculation Wave 2
+        if (game_id_prv.substring(1, 2) == '2') {
+          cs = CalculationMultipleVolume(qs: qs, game_id: game_id_prv);
+          result_data = cs.getSeries();
+          this.title = cs.getTitle();
+        }
+        // Calculation Wave 2
+        if (game_id_prv.substring(1, 2) == '3') {
+          cs = CalculationMultiplePercent(qs: qs, game_id: game_id_prv);
+          result_data = cs.getSeries();
+          this.title = cs.getTitle();
+        }
+        // Calculation Wave 4
+        if (game_id_prv.substring(1, 2) == '4') {
+          cs = CalculationQualitative(qs: qs, game_id: game_id_prv);
+          result_data = cs.getSeries();
+          this.title = cs.getTitle();
+        }
       }
 
       setState(() {});
@@ -62,11 +74,10 @@ class ResultScreenState extends State<ResultScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Results'),
-      ),
-      body: Center(
+    Widget result_widget = Text('No data');
+
+    if (data_exists == true) {
+      result_widget = Center(
           child: Column(
         children: [
           Container(
@@ -98,7 +109,12 @@ class ResultScreenState extends State<ResultScreen> {
             ),
           )
         ],
-      )),
-    );
+      ));
+    }
+    return Scaffold(
+        appBar: AppBar(
+          title: const Text('Results'),
+        ),
+        body: result_widget);
   }
 }

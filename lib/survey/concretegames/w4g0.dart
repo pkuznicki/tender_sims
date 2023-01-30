@@ -23,7 +23,6 @@ class w4g0 extends ISurveyConnector {
   @override
   List<Step> getSteps(context) {
     return [
-      InstructionStepTenderNationLogo(),
       InstructionStepw4g0s1(context),
       InstructionStepw4g0s2(context),
       InstructionStepw4g0s3(context),

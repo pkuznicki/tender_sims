@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -25,7 +23,7 @@ class CalculationQualitative implements ICalculation {
   Map<String, double> team_perceived_bp = {};
   List<MapEntry<String, dynamic>> winners = [];
   Map<String, int> awarded_volumes = {};
-  Map<String, List<String>> team_upgrades = {};
+  Map<String, String> team_upgrades = {};
 
   CalculationQualitative({required QuerySnapshot qs, required String game_id}) {
     this.qs = qs;
@@ -45,7 +43,7 @@ class CalculationQualitative implements ICalculation {
     // Get upgrade info from survey
     qs.docs.forEach((team_result) {
       String team_id = team_result['team_name_str'];
-      List<String> arr_qc = team_result['qual_crit_str'];
+      String arr_qc = team_result['qual_crit_str'];
       team_upgrades[team_id] = arr_qc;
     });
 
@@ -59,7 +57,7 @@ class CalculationQualitative implements ICalculation {
           team_norm_score = team_norm_score + weight * (score - 1) / 5;
 
           //Upgrades
-          if ((team_upgrades[team_id] ?? []).contains(crit) && (score < 6)) {
+          if ((team_upgrades[team_id] ?? '').contains(crit) && (score < 6)) {
             team_norm_score += 0.2;
           }
         });
@@ -86,9 +84,15 @@ class CalculationQualitative implements ICalculation {
       winners = Sort.sortMapByValue(map);
 
       // Calculate Awarded Volumes
-      awarded_volumes[winners[0].key] = (3000000 * 0.5).round();
-      awarded_volumes[winners[1].key] = (3000000 * 0.3).round();
-      awarded_volumes[winners[2].key] = (3000000 * 0.2).round();
+      if (winners.length > 0) {
+        awarded_volumes[winners[0].key] = (3000000 * 0.5).round();
+      }
+      if (winners.length > 1) {
+        awarded_volumes[winners[1].key] = (3000000 * 0.3).round();
+      }
+      if (winners.length > 2) {
+        awarded_volumes[winners[2].key] = (3000000 * 0.2).round();
+      }
       // Add losing teams
       tn_const.tnConstants.get_team_names().forEach((team_id, team_name) {
         if (awarded_volumes.containsKey(team_id) == false) {
@@ -104,8 +108,10 @@ class CalculationQualitative implements ICalculation {
         String team_name = team_result['team_name_str'];
         int volume = awarded_volumes[team_name] ?? -1;
         double cogs = tn_const.tnConstants.get_cogs(team_id: team_name);
-        double additional_costs =
-            1000000 * ((team_result['qual_crit_str']).size()) as double;
+        double additional_costs = 1000000 *
+            ((team_result['qual_crit_str'] as String)
+                .allMatches(',')
+                .length) as double;
 
         salesdata.add(
           OrdinalSales(team_name, (volume * price).round()),

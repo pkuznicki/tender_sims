@@ -17,7 +17,6 @@ class w1g3 extends ISurveyConnector {
   @override
   List<Step> getSteps(context) {
     return [
-      InstructionStepTenderNationLogo(),
       QuestionStepTeamName(),
       InstructionStepw1g3s1(context),
       QuestionStepPriceZipper(),

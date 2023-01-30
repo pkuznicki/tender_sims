@@ -15,10 +15,6 @@ import 'package:tender_sims/survey/concretegames/concretesteps/InstructionStepw3
 class w3g0 extends ISurveyConnector {
   @override
   List<Step> getSteps(context) {
-    return [
-      InstructionStepTenderNationLogo(),
-      InstructionStepw3g0s1(context),
-      CompletionStepEndGame()
-    ];
+    return [InstructionStepw3g0s1(context), CompletionStepEndGame()];
   }
 }

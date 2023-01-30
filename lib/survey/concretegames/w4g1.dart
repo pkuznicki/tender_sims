@@ -26,7 +26,6 @@ class w4g1 extends ISurveyConnector {
     ICompletionStep CSEndGame = CompletionStepEndGame();
 
     return [
-      ISTenderNationLogo,
       QuestionStepTeamName(),
       ISw4g1s1,
       ISw4g1s2,
