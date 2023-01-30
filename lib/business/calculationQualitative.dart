@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -23,6 +25,7 @@ class CalculationQualitative implements ICalculation {
   Map<String, double> team_perceived_bp = {};
   List<MapEntry<String, dynamic>> winners = [];
   Map<String, int> awarded_volumes = {};
+  Map<String, List<String>> team_upgrades = {};
 
   CalculationQualitative({required QuerySnapshot qs, required String game_id}) {
     this.qs = qs;
@@ -39,25 +42,35 @@ class CalculationQualitative implements ICalculation {
     // Calculate qualitiative criteria Wave 4
     //
 
+    // Get upgrade info from survey
+    qs.docs.forEach((team_result) {
+      String team_id = team_result['team_name_str'];
+      List<String> arr_qc = team_result['qual_crit_str'];
+      team_upgrades[team_id] = arr_qc;
+    });
+
+    // Calculate normalized scores
     if (game_id_prv.substring(1, 2) == '4') {
       tn_const.tnConstants.get_team_names().forEach((team_id, team_name) {
         double team_norm_score = 0;
         tn_const.tnConstants.get_qc_weight_map().forEach((crit, weight) {
           double score =
               ((tn_const.tnConstants.get_points_map)()[team_id]?[crit] ?? 0);
-
           team_norm_score = team_norm_score + weight * (score - 1) / 5;
+
+          //Upgrades
+          if ((team_upgrades[team_id] ?? []).contains(crit) && (score < 6)) {
+            team_norm_score += 0.2;
+          }
         });
         team_qc_norm_score[team_id] = team_norm_score;
-        team_perceived_bp[team_id] = (1 - team_norm_score);
       });
 
       // Calluate perceived bidding price
       qs.docs.forEach(
         (team_result) {
+          String team_id = team_result['team_name_str'];
           double price = double.parse(team_result['price_zipper']);
-          team_perceived_bp[team_result['team_name_str']] =
-              team_perceived_bp[team_result['team_name_str']] ?? -1 * price;
         },
       );
 
@@ -74,7 +87,7 @@ class CalculationQualitative implements ICalculation {
       awarded_volumes[winners[0].key] = (3000000 * 0.5).round();
       awarded_volumes[winners[1].key] = (3000000 * 0.3).round();
       awarded_volumes[winners[2].key] = (3000000 * 0.2).round();
-      // Add lossing teams
+      // Add losing teams
       tn_const.tnConstants.get_team_names().forEach((team_id, team_name) {
         if (awarded_volumes.containsKey(team_id) == false) {
           awarded_volumes[team_id] = 0;
@@ -82,19 +95,23 @@ class CalculationQualitative implements ICalculation {
       });
     }
 
+    // Generate Chart data
     qs.docs.forEach(
       (team_result) {
         double price = double.parse(team_result['price_zipper']);
         String team_name = team_result['team_name_str'];
         int volume = awarded_volumes[team_name] ?? -1;
         double cogs = tn_const.tnConstants.get_cogs(team_id: team_name);
+        double additional_costs =
+            1000000 * ((team_result['qual_crit_str']).size()) as double;
 
         salesdata.add(
           OrdinalSales(team_name, (volume * price).round()),
         );
 
         cogsdata.add(
-          OrdinalSales(team_name, (volume * cogs).round()),
+          OrdinalSales(
+              team_name, (volume * cogs).round() - additional_costs as int),
         );
 
         profitdata.add(
