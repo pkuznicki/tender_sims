@@ -17,11 +17,12 @@ import 'package:tender_sims/survey/widgets/adminWidget.dart';
 import 'package:go_router/go_router.dart';
 import 'package:tender_sims/survey/helpers/maps.dart';
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
-
+import 'package:intl/intl.dart';
 // TODO
 // Add results won revenue and color coding
 
 void main() async {
+  Intl.defaultLocale = 'en_US';
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

@@ -14,6 +14,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
 import 'package:tender_sims/business/constants.dart' as tn_const;
 import 'package:tender_sims/survey/helpers/sort.dart';
+import 'package:intl/intl.dart';
 
 class CalculationSingle implements ICalculation {
   late QuerySnapshot qs;
@@ -72,6 +73,7 @@ class CalculationSingle implements ICalculation {
       );
     } // eo single winner
 
+    var f = NumberFormat();
     return [
       charts.Series<OrdinalSales, String>(
           id: 'Revenue',
@@ -79,7 +81,7 @@ class CalculationSingle implements ICalculation {
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: salesdata,
           labelAccessorFn: (OrdinalSales sales, _) =>
-              '${sales.sales.toString()}',
+              '${f.format(sales.sales)}',
           colorFn: (OrdinalSales sales, _) {
             if (sales.year == team_winning) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade300);
@@ -92,7 +94,7 @@ class CalculationSingle implements ICalculation {
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: cogsdata,
           labelAccessorFn: (OrdinalSales sales, _) =>
-              '${sales.sales.toString()}',
+              '${f.format(sales.sales)}',
           colorFn: (OrdinalSales sales, _) {
             if (sales.year == team_winning) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade100);
@@ -105,7 +107,7 @@ class CalculationSingle implements ICalculation {
           measureFn: (OrdinalSales sales, _) => sales.sales,
           data: profitdata,
           labelAccessorFn: (OrdinalSales sales, _) =>
-              '${sales.sales.toString()}',
+              '${f.format(sales.sales)}',
           colorFn: (OrdinalSales sales, _) {
             if (sales.year == team_winning) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade50);
