@@ -174,6 +174,12 @@ class CalculationQualitative implements ICalculation {
 
   @override
   String getTitle() {
-    return Map.fromIterable(winners).keys.toString();
+    String result = '';
+    winners.forEach((winner) {
+      result += 'Team: ' + winner.key.toString();
+      result += ' Price: ' + winner.value.toString();
+      result += ' ';
+    });
+    return result;
   }
 }

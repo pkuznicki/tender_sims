@@ -56,6 +56,10 @@ class CalculationMultipleVolume implements ICalculation {
     });
 
     winners = Sort.sortMapByValue(map);
+    List<String> winner_ids = [];
+    winners.forEach((element) {
+      winner_ids.add(element.key.toString());
+    });
 
     // Calculate Awarded Volumes
     int cum_volume = 0;
@@ -117,7 +121,7 @@ class CalculationMultipleVolume implements ICalculation {
           labelAccessorFn: (OrdinalSales sales, _) =>
               '${f.format(sales.sales)}',
           colorFn: (OrdinalSales sales, _) {
-            if (Map.fromIterable(winners).keys.contains(sales.year)) {
+            if (winner_ids.contains(sales.year)) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade300);
             }
             return charts.ColorUtil.fromDartColor(Colors.blue.shade300);
@@ -130,7 +134,7 @@ class CalculationMultipleVolume implements ICalculation {
           labelAccessorFn: (OrdinalSales sales, _) =>
               '${f.format(sales.sales)}',
           colorFn: (OrdinalSales sales, _) {
-            if (Map.fromIterable(winners).keys.contains(sales.year)) {
+            if (winner_ids.contains(sales.year)) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade100);
             }
             return charts.ColorUtil.fromDartColor(Colors.blue.shade100);
@@ -143,7 +147,7 @@ class CalculationMultipleVolume implements ICalculation {
           labelAccessorFn: (OrdinalSales sales, _) =>
               '${f.format(sales.sales)}',
           colorFn: (OrdinalSales sales, _) {
-            if (Map.fromIterable(winners).keys.contains(sales.year)) {
+            if (winner_ids.contains(sales.year)) {
               return charts.ColorUtil.fromDartColor(Colors.green.shade50);
             }
             return charts.ColorUtil.fromDartColor(Colors.blue.shade50);
@@ -154,9 +158,9 @@ class CalculationMultipleVolume implements ICalculation {
   @override
   String getTitle() {
     String result = '';
-    Map.fromIterable(winners).forEach((key, value) {
-      result += 'Team: ' + key.toString();
-      result += ' Price: ' + value.toString();
+    winners.forEach((winner) {
+      result += 'Team: ' + winner.key.toString();
+      result += ' Price: ' + winner.value.toString();
       result += ' ';
     });
     return result;
