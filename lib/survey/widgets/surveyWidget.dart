@@ -1,5 +1,5 @@
 import 'dart:html';
-
+import 'package:go_router/go_router.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -95,6 +95,7 @@ class SurveyWidget extends StatelessWidget {
                   docRef_survey
                       .set(map_result)
                       .onError((e, _) => print("Error writing document: $e"));
+                  context.go('/');
                 },
                 task: task,
                 showProgress: true,

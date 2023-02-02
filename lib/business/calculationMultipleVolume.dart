@@ -44,7 +44,7 @@ class CalculationMultipleVolume implements ICalculation {
 
     qs.docs.forEach((team_result) {
       String team_id = team_result['team_name_str'];
-      int bidded_volume = team_result['price_zipper_volume_str'];
+      int bidded_volume = int.parse(team_result['price_zipper_volume']);
       bidded_volumes[team_id] = bidded_volume;
     });
 
@@ -60,19 +60,24 @@ class CalculationMultipleVolume implements ICalculation {
     // Calculate Awarded Volumes
     int cum_volume = 0;
     int i = 0;
-    while (cum_volume < 3000000) {
+    while ((cum_volume < 3000000) && (i < winners.length)) {
       cum_volume += bidded_volumes[winners[i].key]!;
       i += 1;
     }
     int tail = cum_volume - 3000000;
 
     // Assign awarded volumes
-    for (int j = 0; j < i - 1; j + 1) {
-      String team_id = winners[i].key;
+    for (int j = 0; j < i - 1; j += 1) {
+      String team_id = winners[j].key;
       awarded_volumes[team_id] = bidded_volumes[team_id]!;
     }
-    String team_id = winners[i - 1].key;
-    awarded_volumes[team_id] = bidded_volumes[team_id]! - tail;
+    if (i - 1 < winners.length) {
+      String team_id = winners[i - 1].key;
+      if (tail < 0) {
+        tail = 0;
+      }
+      awarded_volumes[team_id] = bidded_volumes[team_id]! - tail;
+    }
 
     // Add losing teams
     tn_const.tnConstants.get_team_names().forEach((team_id, team_name) {
@@ -148,6 +153,12 @@ class CalculationMultipleVolume implements ICalculation {
 
   @override
   String getTitle() {
-    return Map.fromIterable(winners).keys.toString();
+    String result = '';
+    Map.fromIterable(winners).forEach((key, value) {
+      result += 'Team: ' + key.toString();
+      result += ' Price: ' + value.toString();
+      result += ' ';
+    });
+    return result;
   }
 }
