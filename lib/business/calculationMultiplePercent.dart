@@ -49,9 +49,15 @@ class CalculationMultiplePercent implements ICalculation {
     winners = Sort.sortMapByValue(map);
 
     // Calculate Awarded Volumes
-    awarded_volumes[winners[0].key] = (3000000 * 0.5).round();
-    awarded_volumes[winners[1].key] = (3000000 * 0.3).round();
-    awarded_volumes[winners[2].key] = (3000000 * 0.2).round();
+    if (winners.length > 0) {
+      awarded_volumes[winners[0].key] = (3000000 * 0.5).round();
+    }
+    if (winners.length > 1) {
+      awarded_volumes[winners[1].key] = (3000000 * 0.3).round();
+    }
+    if (winners.length > 2) {
+      awarded_volumes[winners[2].key] = (3000000 * 0.2).round();
+    }
     // Add losing teams
     tn_const.tnConstants.get_team_names().forEach((team_id, team_name) {
       if (awarded_volumes.containsKey(team_id) == false) {
@@ -127,6 +133,12 @@ class CalculationMultiplePercent implements ICalculation {
 
   @override
   String getTitle() {
-    return Map.fromIterable(winners).keys.toString();
+    String result = '';
+    Map.fromIterable(winners).forEach((key, value) {
+      result += 'Team: ' + key.toString();
+      result += ' Price: ' + value.toString();
+      result += ' ';
+    });
+    return result;
   }
 }
