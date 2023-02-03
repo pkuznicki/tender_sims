@@ -13,7 +13,7 @@ import 'package:tender_sims/survey/helpers/maps.dart';
 
 Widget buildPopupDialog(BuildContext context, List<Widget> logWidget) {
   return AlertDialog(
-    title: const Text('Popup example'),
+    title: const Text('Calculation Details'),
     content: Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,

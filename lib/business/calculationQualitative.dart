@@ -61,14 +61,14 @@ class CalculationQualitative implements ICalculation {
         team_norm_score = team_norm_score + weight * (score - 1) / 5;
         //Upgrades
         if ((team_upgrades[team_id] ?? '').contains(crit) && (score < 6)) {
-          team_norm_score += 0.2;
+          team_norm_score += 0.2 * weight;
         }
       });
       team_qc_norm_score[team_id] = team_norm_score;
       log.add(Text('Normalized Score w/ Upgrades. Team: ' +
           team_name +
           ' .Score: ' +
-          double.parse(team_norm_score.toString()).toStringAsFixed(2)));
+          double.parse(team_norm_score.toString()).toStringAsFixed(3)));
     });
 
     // Calluate perceived bidding price
