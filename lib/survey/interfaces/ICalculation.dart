@@ -14,7 +14,7 @@ import 'package:tender_sims/survey/widgets/sampleChart.dart';
 
 abstract class ICalculation {
   String getTitle();
+  List<Widget> get_log();
   List<charts.Series<OrdinalSales, String>> getSeries();
-
   ICalculation(QuerySnapshot qs);
 }

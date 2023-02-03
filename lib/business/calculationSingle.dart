@@ -23,6 +23,7 @@ class CalculationSingle implements ICalculation {
   String team_winning = 'no_team';
   double value_winning = 0;
   String game_id_prv = 'no_game_id';
+  List<Widget> log = [];
 
   CalculationSingle({required QuerySnapshot qs, required String game_id}) {
     this.qs = qs;
@@ -120,5 +121,11 @@ class CalculationSingle implements ICalculation {
   @override
   String getTitle() {
     return team_winning;
+  }
+
+  @override
+  List<Widget> get_log() {
+    // TODO: implement get_log
+    throw UnimplementedError();
   }
 }

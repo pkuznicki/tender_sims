@@ -23,6 +23,7 @@ class CalculationMultipleVolume implements ICalculation {
   List<MapEntry<String, dynamic>> winners = [];
   Map<String, int> awarded_volumes = {};
   Map<String, int> bidded_volumes = {};
+  List<Widget> log = [];
 
   CalculationMultipleVolume(
       {required QuerySnapshot qs, required String game_id}) {
@@ -164,5 +165,11 @@ class CalculationMultipleVolume implements ICalculation {
       result += ' ';
     });
     return result;
+  }
+
+  @override
+  List<Widget> get_log() {
+    // TODO: implement get_log
+    throw UnimplementedError();
   }
 }

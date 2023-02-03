@@ -22,6 +22,7 @@ class CalculationMultiplePercent implements ICalculation {
   String game_id_prv = 'no_game_id';
   List<MapEntry<String, dynamic>> winners = [];
   Map<String, int> awarded_volumes = {};
+  List<Widget> log = [];
 
   CalculationMultiplePercent(
       {required QuerySnapshot qs, required String game_id}) {
@@ -144,5 +145,11 @@ class CalculationMultiplePercent implements ICalculation {
       result += ' ';
     });
     return result;
+  }
+
+  @override
+  List<Widget> get_log() {
+    // TODO: implement get_log
+    throw UnimplementedError();
   }
 }
