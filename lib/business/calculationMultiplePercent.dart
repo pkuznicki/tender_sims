@@ -149,7 +149,8 @@ class CalculationMultiplePercent implements ICalculation {
     String result = '';
     winners.forEach((winner) {
       result += 'Team: ' + winner.key.toString();
-      result += ' Price: ' + winner.value.toString();
+      result +=
+          ' Price: ' + double.parse(winner.value.toString()).toStringAsFixed(3);
       result += ' ';
     });
     return result;
@@ -157,7 +158,6 @@ class CalculationMultiplePercent implements ICalculation {
 
   @override
   List<Widget> get_log() {
-    // TODO: implement get_log
-    throw UnimplementedError();
+    return log;
   }
 }

@@ -52,8 +52,8 @@ class CalculationSingle implements ICalculation {
         },
       );
 
-      log.add(Text('Winning Team' + team_winning));
-      log.add(Text('Winning Price' + price_winning.toString()));
+      log.add(Text('Winning Team: ' + team_winning));
+      log.add(Text('Winning Price: ' + price_winning.toString()));
 
       qs.docs.forEach(
         (team_result) {
@@ -128,7 +128,6 @@ class CalculationSingle implements ICalculation {
 
   @override
   List<Widget> get_log() {
-    // TODO: implement get_log
-    throw UnimplementedError();
+    return log;
   }
 }

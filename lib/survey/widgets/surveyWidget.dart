@@ -92,10 +92,9 @@ class SurveyWidget extends StatelessWidget {
                   final docRef_survey = FirebaseFirestore.instance
                       .collection(game_id_prv)
                       .doc(team_id);
-                  docRef_survey
-                      .set(map_result)
-                      .onError((e, _) => print("Error writing document: $e"));
-                  context.go('/thankyou');
+                  docRef_survey.set(map_result).then((value) {
+                    context.go('/thankyou');
+                  });
                 },
                 task: task,
                 showProgress: true,
