@@ -23,6 +23,14 @@ class w1g0 extends ISurveyConnector {
 
     ICompletionStep CSEndGame = CompletionStepEndGame();
 
-    return [w1g0s1, w1g0s2, w1g0s3, w1g0s4, w1g0s5, CSEndGame];
+    return [
+      QuestionStepTeamName(),
+      w1g0s1,
+      w1g0s2,
+      w1g0s3,
+      w1g0s4,
+      w1g0s5,
+      CSEndGame
+    ];
   }
 }

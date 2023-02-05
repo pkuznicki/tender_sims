@@ -18,6 +18,7 @@ class w2g0 extends ISurveyConnector {
   @override
   List<Step> getSteps(context) {
     return [
+      QuestionStepTeamName(),
       InstructionStepw2g0s1(context),
       InstructionStepw2g0s2(context),
       InstructionStepw2g0s3(context),
