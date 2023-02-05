@@ -94,10 +94,31 @@ class AdminScreenState extends State<AdminScreen> {
                     child: Text('See Results'),
                   ),
                 ),
+                Container(
+                  height: 25,
+                ),
+                Container(
+                    height: 50,
+                    width: 300,
+                    child: ElevatedButton(
+                        onPressed: () {
+                          final docRef = FirebaseFirestore.instance
+                              .collection(game_id)
+                              .snapshots()
+                              .forEach((element) {
+                            for (QueryDocumentSnapshot docSnapshot
+                                in element.docs) {
+                              docSnapshot.reference.delete();
+                            }
+                          });
+                          game_name = 'Deleted!';
+                          setState(() {});
+                        },
+                        child: Text('Delete Current Game'))),
               ],
             ),
             Container(
-              width: 50,
+              width: 25,
             ),
             Column(
               children: lst_game_buttons,

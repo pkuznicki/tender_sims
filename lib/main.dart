@@ -18,6 +18,7 @@ import 'package:go_router/go_router.dart';
 import 'package:tender_sims/survey/helpers/maps.dart';
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
 import 'package:intl/intl.dart';
+import 'package:tender_sims/survey/widgets/thankyouWidget copy.dart';
 // TODO
 // Add results won revenue and color coding
 
@@ -95,7 +96,10 @@ class _MyAppState extends State<MyApp> {
       path: '/error',
       builder: (BuildContext context, GoRouterState state) => errorWidget(),
     ));
-
+    routes.add(GoRoute(
+      path: '/thankyou',
+      builder: (BuildContext context, GoRouterState state) => thankyouWidget(),
+    ));
     _router = GoRouter(routes: routes);
     super.initState();
   }

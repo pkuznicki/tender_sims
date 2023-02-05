@@ -53,7 +53,13 @@ class CalculationMultipleVolume implements ICalculation {
     Map<String, double> map = {};
     qs.docs.forEach((team_result) {
       String team_id = team_result['team_name_str'];
-      map[team_id] = double.parse(team_result['price_zipper']);
+      double price = double.parse(team_result['price_zipper']);
+
+      map[team_id] = price;
+      log.add(Text('Bidding Price. Team: ' +
+          team_id +
+          ' .Score: ' +
+          double.parse(price.toString()).toStringAsFixed(3)));
     });
 
     winners = Sort.sortMapByValue(map);
@@ -75,6 +81,9 @@ class CalculationMultipleVolume implements ICalculation {
     for (int j = 0; j < i - 1; j += 1) {
       String team_id = winners[j].key;
       awarded_volumes[team_id] = bidded_volumes[team_id]!;
+      log.add(Text('Awarded Volume. Team: ' +
+          winners[j].key +
+          bidded_volumes[team_id]!.toString()));
     }
     if (i - 1 < winners.length) {
       String team_id = winners[i - 1].key;
@@ -82,6 +91,9 @@ class CalculationMultipleVolume implements ICalculation {
         tail = 0;
       }
       awarded_volumes[team_id] = bidded_volumes[team_id]! - tail;
+      log.add(Text('Awarded Volume. Team: ' +
+          team_id +
+          awarded_volumes[team_id].toString()));
     }
 
     // Add losing teams

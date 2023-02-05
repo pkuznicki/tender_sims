@@ -52,6 +52,9 @@ class CalculationSingle implements ICalculation {
         },
       );
 
+      log.add(Text('Winning Team' + team_winning));
+      log.add(Text('Winning Price' + price_winning.toString()));
+
       qs.docs.forEach(
         (team_result) {
           double price = double.parse(team_result['price_zipper']);

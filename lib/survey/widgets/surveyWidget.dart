@@ -95,7 +95,7 @@ class SurveyWidget extends StatelessWidget {
                   docRef_survey
                       .set(map_result)
                       .onError((e, _) => print("Error writing document: $e"));
-                  context.go('/');
+                  context.go('/thankyou');
                 },
                 task: task,
                 showProgress: true,
