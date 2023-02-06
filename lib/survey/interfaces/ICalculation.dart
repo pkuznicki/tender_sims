@@ -17,4 +17,5 @@ abstract class ICalculation {
   List<Widget> get_log();
   List<charts.Series<OrdinalSales, String>> getSeries();
   ICalculation(QuerySnapshot qs);
+  Map<String, Map<String, double>> calculatedData();
 }

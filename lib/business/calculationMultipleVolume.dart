@@ -24,6 +24,7 @@ class CalculationMultipleVolume implements ICalculation {
   Map<String, int> awarded_volumes = {};
   Map<String, int> bidded_volumes = {};
   List<Widget> log = [];
+  Map<String, Map<String, double>> calculatedDataPrv = {};
 
   CalculationMultipleVolume(
       {required QuerySnapshot qs, required String game_id}) {
@@ -112,20 +113,28 @@ class CalculationMultipleVolume implements ICalculation {
         String team_name = team_result['team_name_str'];
         int volume = awarded_volumes[team_name] ?? -1;
         double cogs = tn_const.tnConstants.get_cogs(team_id: team_name);
+        calculatedDataPrv[team_name] = {};
 
         salesdata.add(
           OrdinalSales(team_name, (volume * price).round()),
         );
+        calculatedDataPrv[team_name]?['salesdata'] =
+            (volume * price * 100).round() / 100;
 
         cogsdata.add(
           OrdinalSales(team_name, (volume * cogs).round()),
         );
+        calculatedDataPrv[team_name]?['cogsdata'] =
+            (volume * cogs * 100).round() / 100;
 
         profitdata.add(
           OrdinalSales(team_name, (volume * (price - cogs)).round()),
         );
+        calculatedDataPrv[team_name]?['profitdata'] =
+            ((volume * (price - cogs)) * 100).round() / 100;
       },
     );
+
     var f = NumberFormat();
     return [
       charts.Series<OrdinalSales, String>(
@@ -185,5 +194,10 @@ class CalculationMultipleVolume implements ICalculation {
   @override
   List<Widget> get_log() {
     return log;
+  }
+
+  @override
+  Map<String, Map<String, double>> calculatedData() {
+    return calculatedDataPrv;
   }
 }

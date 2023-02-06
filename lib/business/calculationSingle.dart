@@ -24,6 +24,7 @@ class CalculationSingle implements ICalculation {
   double value_winning = 0;
   String game_id_prv = 'no_game_id';
   List<Widget> log = [];
+  Map<String, Map<String, double>> calculatedDataPrv = {};
 
   CalculationSingle({required QuerySnapshot qs, required String game_id}) {
     this.qs = qs;
@@ -61,18 +62,25 @@ class CalculationSingle implements ICalculation {
           int volume = 1000000;
           String team_name = team_result['team_name_str'];
           double cogs = tn_const.tnConstants.get_cogs(team_id: team_name);
+          calculatedDataPrv[team_name] = {};
 
           salesdata.add(
             OrdinalSales(team_name, (volume * price).round()),
           );
+          calculatedDataPrv[team_name]?['salesdata'] =
+              (volume * price * 100).round() / 100;
 
           cogsdata.add(
             OrdinalSales(team_name, (volume * cogs).round()),
           );
+          calculatedDataPrv[team_name]?['cogsdata'] =
+              (volume * cogs * 100).round() / 100;
 
           profitdata.add(
             OrdinalSales(team_name, (volume * (price - cogs)).round()),
           );
+          calculatedDataPrv[team_name]?['profitdata'] =
+              ((volume * (price - cogs)) * 100).round() / 100;
         },
       );
     } // eo single winner
@@ -129,5 +137,10 @@ class CalculationSingle implements ICalculation {
   @override
   List<Widget> get_log() {
     return log;
+  }
+
+  @override
+  Map<String, Map<String, double>> calculatedData() {
+    return calculatedDataPrv;
   }
 }

@@ -27,6 +27,7 @@ class CalculationQualitative implements ICalculation {
   Map<String, int> awarded_volumes = {};
   Map<String, String> team_upgrades = {};
   List<Widget> log = [];
+  Map<String, Map<String, double>> calculatedDataPrv = {};
 
   CalculationQualitative({required QuerySnapshot qs, required String game_id}) {
     this.qs = qs;
@@ -152,20 +153,28 @@ class CalculationQualitative implements ICalculation {
 
         int a = "patient_support,".allMatches(',').length;
 
+        calculatedDataPrv[team_name] = {};
         salesdata.add(
           OrdinalSales(team_name, (volume * price).round()),
         );
+        calculatedDataPrv[team_name]?['salesdata'] =
+            (volume * price * 100).round() / 100;
 
         cogsdata.add(
           OrdinalSales(
               team_name, (volume * cogs).round() - additional_costs as int),
         );
+        calculatedDataPrv[team_name]?['cogsdata'] =
+            (volume * cogs * 100).round() / 100;
 
         profitdata.add(
           OrdinalSales(team_name, (volume * (price - cogs)).round()),
         );
+        calculatedDataPrv[team_name]?['profitdata'] =
+            ((volume * (price - cogs)) * 100).round() / 100;
       },
     );
+
     var f = NumberFormat();
     return [
       charts.Series<OrdinalSales, String>(
@@ -224,5 +233,10 @@ class CalculationQualitative implements ICalculation {
   @override
   List<Widget> get_log() {
     return log;
+  }
+
+  @override
+  Map<String, Map<String, double>> calculatedData() {
+    return calculatedDataPrv;
   }
 }

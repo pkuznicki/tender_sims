@@ -36,10 +36,10 @@ class ResultScreenState extends State<ResultScreen> {
         FirebaseFirestore.instance.collection(game_id_prv);
 
     collectionRef.get().then((qs) {
-      ICalculation cs;
-
       if (qs.size > 0) {
         data_exists = true;
+        ICalculation cs;
+        Map<String, dynamic> resMap = {};
 
         // Calculation Wave 1
         if (game_id_prv.substring(1, 2) == '1') {
@@ -47,6 +47,7 @@ class ResultScreenState extends State<ResultScreen> {
           result_data = cs.getSeries();
           this.title = cs.getTitle();
           this.logWidget = cs.get_log();
+          resMap = cs.calculatedData() as Map<String, dynamic>;
         }
         // Calculation Wave 2
         if (game_id_prv.substring(1, 2) == '2') {
@@ -54,13 +55,15 @@ class ResultScreenState extends State<ResultScreen> {
           result_data = cs.getSeries();
           this.title = cs.getTitle();
           this.logWidget = cs.get_log();
+          resMap = cs.calculatedData() as Map<String, dynamic>;
         }
-        // Calculation Wave 2
+        // Calculation Wave 3
         if (game_id_prv.substring(1, 2) == '3') {
           cs = CalculationMultiplePercent(qs: qs, game_id: game_id_prv);
           result_data = cs.getSeries();
           this.title = cs.getTitle();
           this.logWidget = cs.get_log();
+          resMap = cs.calculatedData() as Map<String, dynamic>;
         }
         // Calculation Wave 4
         if (game_id_prv.substring(1, 2) == '4') {
@@ -68,10 +71,16 @@ class ResultScreenState extends State<ResultScreen> {
           result_data = cs.getSeries();
           this.title = cs.getTitle();
           this.logWidget = cs.get_log();
+          resMap = cs.calculatedData() as Map<String, dynamic>;
         }
-      }
 
-      setState(() {});
+        //Write results
+        final docRef_result =
+            FirebaseFirestore.instance.collection('results').doc(game_id_prv);
+        docRef_result.set(resMap).then((value) {
+          setState(() {});
+        });
+      }
     });
 
     super.initState();
