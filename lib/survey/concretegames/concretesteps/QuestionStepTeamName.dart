@@ -15,6 +15,7 @@ class QuestionStepTeamName extends IQuestionStep {
               TextChoice(text: 'Beach BioScience', value: 'beach'),
               TextChoice(text: 'Sunset Pharma', value: 'sunset'),
               TextChoice(text: 'Centerfield Inc.', value: 'centerfield'),
+              TextChoice(text: 'Admin Pharma', value: 'admin'),
             ],
           ),
         );

@@ -140,10 +140,17 @@ class CalculationQualitative implements ICalculation {
         String team_name = team_result['team_name_str'];
         int volume = awarded_volumes[team_name] ?? -1;
         double cogs = tn_const.tnConstants.get_cogs(team_id: team_name);
+
+        team_result['qual_crit_str']
+            .toString()
+            .replaceAll('no_upgrade,', 'no_upgrade');
+
         double additional_costs = 1000000 *
-            ((team_result['qual_crit_str'] as String)
-                .allMatches(',')
+            (','
+                .allMatches((team_result['qual_crit_str'] as String))
                 .length) as double;
+
+        int a = "patient_support,".allMatches(',').length;
 
         salesdata.add(
           OrdinalSales(team_name, (volume * price).round()),

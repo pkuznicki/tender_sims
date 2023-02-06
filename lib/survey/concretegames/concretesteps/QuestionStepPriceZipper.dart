@@ -9,12 +9,12 @@ class QuestionStepPriceZipper extends IQuestionStep {
           stepIdentifier: StepIdentifier(id: 'price_zipper'),
           title: 'Please Select Your Bidding Price in \$.',
           answerFormat: ScaleAnswerFormat(
-            step: 0.1,
-            minimumValue: 5,
-            maximumValue: 50,
-            defaultValue: 10,
-            minimumValueDescription: '10',
-            maximumValueDescription: '50',
-          ),
+              step: 0.1,
+              minimumValue: 5,
+              maximumValue: 50,
+              defaultValue: 10,
+              minimumValueDescription: '10',
+              maximumValueDescription: '50',
+              enum_format: enum_scale_format.price),
         );
 }

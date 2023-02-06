@@ -5,7 +5,8 @@ class tnConstants {
       'river': 10,
       'beach': 9,
       'sunset': 8,
-      'centerfield': 7
+      'centerfield': 7,
+      'admin': 8
     };
 
     return result[team_id] ?? 0;
@@ -28,7 +29,8 @@ class tnConstants {
       'river': 'River',
       'beach': 'Beach',
       'sunset': 'Sunset Pharma',
-      'centerfield': 'Centerfield'
+      'centerfield': 'Centerfield',
+      'admin': 'Admin Pharma'
     };
 
     return result;
@@ -65,6 +67,13 @@ class tnConstants {
         'patient_support': 4,
       },
       'centerfield': {
+        'product_packaging': 4,
+        'delivery_time': 3,
+        'payment_terms': 2,
+        'customer_support': 1,
+        'patient_support': 5,
+      },
+      'admin': {
         'product_packaging': 4,
         'delivery_time': 3,
         'payment_terms': 2,
