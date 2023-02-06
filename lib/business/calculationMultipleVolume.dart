@@ -24,7 +24,7 @@ class CalculationMultipleVolume implements ICalculation {
   Map<String, int> awarded_volumes = {};
   Map<String, int> bidded_volumes = {};
   List<Widget> log = [];
-  Map<String, Map<String, double>> calculatedDataPrv = {};
+  Map<String, Map<String, dynamic>> calculatedDataPrv = {};
 
   CalculationMultipleVolume(
       {required QuerySnapshot qs, required String game_id}) {
@@ -197,7 +197,7 @@ class CalculationMultipleVolume implements ICalculation {
   }
 
   @override
-  Map<String, Map<String, double>> calculatedData() {
+  Map<String, Map<String, dynamic>> calculatedData() {
     return calculatedDataPrv;
   }
 }

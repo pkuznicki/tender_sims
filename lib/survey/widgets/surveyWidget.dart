@@ -79,6 +79,7 @@ class SurveyWidget extends StatelessWidget {
                   map_result['ts'] = Timestamp.now();
                   map_result['qual_crit_str'] = 'no_data';
                   if (map_result.containsKey('qual_crit')) {
+                    map_result['qual_crit_str'] = '';
                     for (TextChoice tc in map_result['qual_crit']) {
                       map_result['qual_crit_str'] += tc.value + ',';
                     }

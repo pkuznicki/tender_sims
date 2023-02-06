@@ -23,7 +23,7 @@ class CalculationMultiplePercent implements ICalculation {
   List<MapEntry<String, dynamic>> winners = [];
   Map<String, int> awarded_volumes = {};
   List<Widget> log = [];
-  Map<String, Map<String, double>> calculatedDataPrv = {};
+  Map<String, Map<String, dynamic>> calculatedDataPrv = {};
 
   CalculationMultiplePercent(
       {required QuerySnapshot qs, required String game_id}) {
@@ -170,7 +170,7 @@ class CalculationMultiplePercent implements ICalculation {
   }
 
   @override
-  Map<String, Map<String, double>> calculatedData() {
+  Map<String, Map<String, dynamic>> calculatedData() {
     return calculatedDataPrv;
   }
 }

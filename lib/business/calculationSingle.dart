@@ -24,7 +24,7 @@ class CalculationSingle implements ICalculation {
   double value_winning = 0;
   String game_id_prv = 'no_game_id';
   List<Widget> log = [];
-  Map<String, Map<String, double>> calculatedDataPrv = {};
+  Map<String, Map<String, dynamic>> calculatedDataPrv = {};
 
   CalculationSingle({required QuerySnapshot qs, required String game_id}) {
     this.qs = qs;
@@ -140,7 +140,7 @@ class CalculationSingle implements ICalculation {
   }
 
   @override
-  Map<String, Map<String, double>> calculatedData() {
+  Map<String, Map<String, dynamic>> calculatedData() {
     return calculatedDataPrv;
   }
 }

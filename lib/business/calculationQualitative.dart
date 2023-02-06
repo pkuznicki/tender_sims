@@ -27,7 +27,7 @@ class CalculationQualitative implements ICalculation {
   Map<String, int> awarded_volumes = {};
   Map<String, String> team_upgrades = {};
   List<Widget> log = [];
-  Map<String, Map<String, double>> calculatedDataPrv = {};
+  Map<String, Map<String, dynamic>> calculatedDataPrv = {};
 
   CalculationQualitative({required QuerySnapshot qs, required String game_id}) {
     this.qs = qs;
@@ -234,7 +234,7 @@ class CalculationQualitative implements ICalculation {
   }
 
   @override
-  Map<String, Map<String, double>> calculatedData() {
+  Map<String, Map<String, dynamic>> calculatedData() {
     return calculatedDataPrv;
   }
 }
