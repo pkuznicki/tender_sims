@@ -101,18 +101,22 @@ class AdminScreenState extends State<AdminScreen> {
                     height: 50,
                     width: 300,
                     child: ElevatedButton(
-                        onPressed: () {
-                          /* final docRef = FirebaseFirestore.instance
-                              .collection(game_id)
-                              .snapshots()
-                              .forEach((element) {
-                            for (QueryDocumentSnapshot docSnapshot
-                                in element.docs) {
-                              docSnapshot.reference.delete();
-                            }
-                          });
+                        onPressed: () async {
+                          // Delete Record
+                          var collection =
+                              FirebaseFirestore.instance.collection(game_id);
+                          var snapshots = await collection.get();
+                          for (var doc in snapshots.docs) {
+                            await doc.reference.delete();
+                          }
+                          // Delete Results
+                          var collection2 =
+                              FirebaseFirestore.instance.collection('results');
+                          var doc = collection2.doc(game_id);
+                          await doc.delete();
+
                           game_name = 'Deleted!';
-                          setState(() {}); */
+                          setState(() {});
                         },
                         child: Text('Delete Current Game'))),
               ],

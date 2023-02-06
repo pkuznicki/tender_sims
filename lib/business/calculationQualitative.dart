@@ -142,16 +142,14 @@ class CalculationQualitative implements ICalculation {
         int volume = awarded_volumes[team_name] ?? -1;
         double cogs = tn_const.tnConstants.get_cogs(team_id: team_name);
 
-        team_result['qual_crit_str']
-            .toString()
-            .replaceAll('no_upgrade,', 'no_upgrade');
-
         double additional_costs = 1000000 *
             (','
                 .allMatches((team_result['qual_crit_str'] as String))
                 .length) as double;
 
-        int a = "patient_support,".allMatches(',').length;
+        if ((team_result['qual_crit_str'] as String).contains('no_upgrade')) {
+          additional_costs -= 1000000;
+        }
 
         calculatedDataPrv[team_name] = {};
         salesdata.add(

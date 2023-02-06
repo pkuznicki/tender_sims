@@ -72,6 +72,7 @@ class ResultScreenState extends State<ResultScreen> {
           this.title = cs.getTitle();
           this.logWidget = cs.get_log();
           resMap = cs.calculatedData() as Map<String, dynamic>;
+          resMap['ts'] = Timestamp.now();
         }
 
         //Write results
