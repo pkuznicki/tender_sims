@@ -102,7 +102,7 @@ class AdminScreenState extends State<AdminScreen> {
                     width: 300,
                     child: ElevatedButton(
                         onPressed: () {
-                          final docRef = FirebaseFirestore.instance
+                          /* final docRef = FirebaseFirestore.instance
                               .collection(game_id)
                               .snapshots()
                               .forEach((element) {
@@ -112,7 +112,7 @@ class AdminScreenState extends State<AdminScreen> {
                             }
                           });
                           game_name = 'Deleted!';
-                          setState(() {});
+                          setState(() {}); */
                         },
                         child: Text('Delete Current Game'))),
               ],

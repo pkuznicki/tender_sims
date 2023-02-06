@@ -106,7 +106,7 @@ class CalculationQualitative implements ICalculation {
 
     // Calculate Awarded Volumes
     if (winners.length > 0) {
-      awarded_volumes[winners[0].key] = (3000000 * 0.5).round();
+      awarded_volumes[winners[0].key] = (3000000 * 0.6).round();
       log.add(Text('Awarded volume. Winner 1 ' +
           winners[0].key +
           ': ' +
@@ -120,7 +120,7 @@ class CalculationQualitative implements ICalculation {
           awarded_volumes[winners[1].key].toString()));
     }
     if (winners.length > 2) {
-      awarded_volumes[winners[2].key] = (3000000 * 0.2).round();
+      awarded_volumes[winners[2].key] = (3000000 * 0.1).round();
       log.add(Text('Awarded volume. Winner 3 ' +
           winners[2].key +
           ': ' +

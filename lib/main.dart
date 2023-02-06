@@ -19,8 +19,15 @@ import 'package:tender_sims/survey/helpers/maps.dart';
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
 import 'package:intl/intl.dart';
 import 'package:tender_sims/survey/widgets/thankyouWidget copy.dart';
-// TODO
-// Add results won revenue and color coding
+
+// TODO slider with decimals
+// TODO slider below 10
+
+// TODO Admin Pharma
+// TODO Limit on 2.1 M on all games
+// TODO Add do not invest
+// TODO Winner of all profit and per wave
+// TODO Change 60 30 10
 
 void main() async {
   Intl.defaultLocale = 'en_US';

@@ -17,6 +17,7 @@ class QualitativeCriteria extends IQuestionStep {
               TextChoice(text: 'Customer Support', value: 'customer_support'),
               TextChoice(
                   text: 'Patient Support Programs', value: 'patient_support'),
+              TextChoice(text: 'No Upgrade', value: 'no_upgrade'),
             ],
           ),
           isOptional: false,

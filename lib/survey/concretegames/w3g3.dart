@@ -22,12 +22,6 @@ class w3g3 extends ISurveyConnector {
 
     ICompletionStep CSEndGame = CompletionStepEndGame();
 
-    return [
-      QuestionStepTeamName(),
-      ISw3g3s1,
-      ISQuestionStepZipper,
-      QuestionStepPriceZipperVolume(volume: 3000000),
-      CSEndGame
-    ];
+    return [QuestionStepTeamName(), ISw3g3s1, ISQuestionStepZipper, CSEndGame];
   }
 }

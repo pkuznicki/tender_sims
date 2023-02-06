@@ -60,7 +60,7 @@ class CalculationMultiplePercent implements ICalculation {
 
     // Calculate Awarded Volumes
     if (winners.length > 0) {
-      awarded_volumes[winners[0].key] = (3000000 * 0.5).round();
+      awarded_volumes[winners[0].key] = (3000000 * 0.6).round();
       log.add(Text('Winner 1. Awarded 50%. Team: ' + winners[0].key));
     }
     if (winners.length > 1) {
@@ -68,7 +68,7 @@ class CalculationMultiplePercent implements ICalculation {
       log.add(Text('Winner 2. Awarded 30%. Team: ' + winners[1].key));
     }
     if (winners.length > 2) {
-      awarded_volumes[winners[2].key] = (3000000 * 0.2).round();
+      awarded_volumes[winners[2].key] = (3000000 * 0.1).round();
       log.add(Text('Winner 3. Awarded 20%. Team: ' + winners[2].key));
     }
     // Add losing teams
