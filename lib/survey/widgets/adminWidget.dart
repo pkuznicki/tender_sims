@@ -56,6 +56,13 @@ class AdminScreenState extends State<AdminScreen> {
           ],
         ));
       });
+
+      lst_game_buttons.insert(
+          0,
+          Container(
+            height: 70,
+          ));
+
       setState(() {});
     });
   }
@@ -70,7 +77,7 @@ class AdminScreenState extends State<AdminScreen> {
         child: Row(
           children: [
             Container(
-              width: 300,
+              width: 125,
             ),
             Column(
               children: [
@@ -98,9 +105,93 @@ class AdminScreenState extends State<AdminScreen> {
                   height: 25,
                 ),
                 Container(
+                  height: 50,
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.go('/results/$game_id');
+                    },
+                    child: Text('Wave 1 Results'),
+                  ),
+                ),
+                Container(
+                  height: 25,
+                ),
+                Container(
+                  height: 50,
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.go('/results/$game_id');
+                    },
+                    child: Text('Wave 2 Results'),
+                  ),
+                ),
+                Container(
+                  height: 25,
+                ),
+                Container(
+                  height: 50,
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.go('/results/$game_id');
+                    },
+                    child: Text('Wave 3 Results'),
+                  ),
+                ),
+                Container(
+                  height: 25,
+                ),
+                Container(
+                  height: 50,
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.go('/results/$game_id');
+                    },
+                    child: Text('Wave 4 Results'),
+                  ),
+                ),
+                Container(
+                  height: 25,
+                ),
+                Container(
+                  height: 50,
+                  width: 300,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      context.go('/results/$game_id');
+                    },
+                    child: Text('Overall Results'),
+                  ),
+                ),
+              ],
+            ),
+            Container(
+              width: 25,
+            ),
+            Column(children: lst_game_buttons),
+            Container(
+              height: 25,
+              width: 25,
+            ),
+            Column(
+              //Deletions
+              children: [
+                Container(
+                  height: 75,
+                ),
+                Container(
                     height: 50,
                     width: 300,
                     child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.red.shade300, // background (button) color
+                          foregroundColor:
+                              Colors.white, // foreground (text) color
+                        ),
                         onPressed: () async {
                           // Delete Record
                           var collection =
@@ -126,6 +217,12 @@ class AdminScreenState extends State<AdminScreen> {
                     height: 50,
                     width: 300,
                     child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor:
+                              Colors.red.shade300, // background (button) color
+                          foregroundColor:
+                              Colors.white, // foreground (text) color
+                        ),
                         onPressed: () async {
                           // Delete Records
                           for (var w = 0; w < 5; w++) {
@@ -153,12 +250,6 @@ class AdminScreenState extends State<AdminScreen> {
                         },
                         child: Text('Delete All Games'))),
               ],
-            ),
-            Container(
-              width: 25,
-            ),
-            Column(
-              children: lst_game_buttons,
             )
           ],
         ),

@@ -164,7 +164,7 @@ class CalculationQualitative implements ICalculation {
         // Costs
         cogsdata.add(
           OrdinalSales(
-              team_name, (volume * cogs).round() - additional_costs as int),
+              team_name, (volume * cogs).round() + additional_costs as int),
         );
         calculatedDataPrv[team_name]?['cogsdata'] =
             ((volume * cogs * 100).round() + 100 * (additional_costs as int)) /
