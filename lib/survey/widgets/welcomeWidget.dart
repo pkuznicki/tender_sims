@@ -10,6 +10,7 @@ import 'package:tender_sims/survey/widgets/playChart.dart';
 import 'playerSeries.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/helpers/maps.dart';
+import 'dart:html' as html;
 
 class WelcomeScreen extends StatelessWidget {
   WelcomeScreen(this.game_id_prv);
@@ -42,12 +43,6 @@ class WelcomeScreen extends StatelessWidget {
             maps.map_games[game_id_prv] as String,
             style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
-          Container(
-            height: 10,
-          ),
-          Container(
-            height: 10,
-          ),
           Expanded(
             child: Image.asset(
               'assets/tn_logo.png',
@@ -68,7 +63,25 @@ class WelcomeScreen extends StatelessWidget {
                   context.go('/$game_id_prv');
                 },
                 child: Text(
-                  'Start Game!',
+                  'Start Game',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                ),
+              )),
+          Container(
+            height: 10,
+          ),
+          Container(
+              height: 50,
+              width: 300,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue.shade800),
+                onPressed: () {
+                  html.window.location.reload();
+                },
+                child: Text(
+                  'Next Game',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 20),
                 ),

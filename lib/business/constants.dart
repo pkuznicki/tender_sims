@@ -1,15 +1,29 @@
 class tnConstants {
-  static double get_cogs({required String team_id}) {
-    Map<String, double> result = {
-      'polaris': 11,
-      'river': 10,
-      'beach': 9,
-      'sunset': 8,
-      'centerfield': 7,
-      'admin': 8
+  static List<double> get_cogs_pars({required String team_id}) {
+    Map<String, List<double>> result = {
+      'polaris': [0, 11, 2100, 7.68],
+      'river': [0, 10, 2100, 6.98],
+      'beach': [0, 9, 2100, 6.29],
+      'sunset': [0, 8, 1800, 5.88],
+      'centerfield': [0, 7, 1800, 5.15],
+      'admin': [0, 15, 2100, 14],
     };
 
-    return result[team_id] ?? 0;
+    return result[team_id] ?? [-1, -1, -1, -1];
+  }
+
+  static double get_cogs({required String team_id, required int volume}) {
+    double result = -1;
+
+    double x1 = get_cogs_pars(team_id: team_id)[0];
+    double y1 = get_cogs_pars(team_id: team_id)[1];
+    double x2 = get_cogs_pars(team_id: team_id)[2];
+    double y2 = get_cogs_pars(team_id: team_id)[3];
+
+    double a = (y2 - y1) / (x2 - x1);
+    result = y1 + a * x2;
+
+    return result;
   }
 
   static Map<String, double> get_qc_weight_map() {

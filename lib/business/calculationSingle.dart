@@ -61,7 +61,8 @@ class CalculationSingle implements ICalculation {
           double price = double.parse(team_result['price_zipper']);
           int volume = 1000000;
           String team_name = team_result['team_name_str'];
-          double cogs = tn_const.tnConstants.get_cogs(team_id: team_name);
+          double cogs =
+              tn_const.tnConstants.get_cogs(team_id: team_name, volume: volume);
           calculatedDataPrv[team_name] = {};
 
           salesdata.add(
