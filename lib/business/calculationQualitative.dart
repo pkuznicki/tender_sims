@@ -149,28 +149,36 @@ class CalculationQualitative implements ICalculation {
                 .length) as double;
 
         if ((team_result['qual_crit_str'] as String).contains('no_upgrade')) {
-          additional_costs -= 1000000;
+          additional_costs = additional_costs - 1000000;
         }
 
         calculatedDataPrv[team_name] = {};
+
+        // Sales
         salesdata.add(
           OrdinalSales(team_name, (volume * price).round()),
         );
         calculatedDataPrv[team_name]?['salesdata'] =
             (volume * price * 100).round() / 100;
 
+        // Costs
         cogsdata.add(
           OrdinalSales(
               team_name, (volume * cogs).round() - additional_costs as int),
         );
         calculatedDataPrv[team_name]?['cogsdata'] =
-            (volume * cogs * 100).round() / 100;
+            ((volume * cogs * 100).round() + 100 * (additional_costs as int)) /
+                100;
 
+        // Profit
         profitdata.add(
-          OrdinalSales(team_name, (volume * (price - cogs)).round()),
+          OrdinalSales(team_name,
+              (volume * (price - cogs)).round() - additional_costs as int),
         );
         calculatedDataPrv[team_name]?['profitdata'] =
-            ((volume * (price - cogs)) * 100).round() / 100;
+            (((volume * (price - cogs)) * 100).round() -
+                    100 * (additional_costs as int)) /
+                100;
       },
     );
 

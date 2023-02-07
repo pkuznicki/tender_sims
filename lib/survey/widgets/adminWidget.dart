@@ -119,6 +119,39 @@ class AdminScreenState extends State<AdminScreen> {
                           setState(() {});
                         },
                         child: Text('Delete Current Game'))),
+                Container(
+                  height: 25,
+                ),
+                Container(
+                    height: 50,
+                    width: 300,
+                    child: ElevatedButton(
+                        onPressed: () async {
+                          // Delete Records
+                          for (var w = 0; w < 5; w++) {
+                            for (var g = 0; g < 4; g++) {
+                              var collection = FirebaseFirestore.instance
+                                  .collection(
+                                      'w' + w.toString() + 'g' + g.toString());
+                              var snapshots = await collection.get();
+                              for (var doc in snapshots.docs) {
+                                await doc.reference.delete();
+                              }
+                            }
+                          }
+
+                          // Delete Results
+                          var collection2 =
+                              FirebaseFirestore.instance.collection('results');
+                          var snapshots2 = await collection2.get();
+                          for (var doc in snapshots2.docs) {
+                            await doc.reference.delete();
+                          }
+
+                          game_name = 'Deleted!';
+                          setState(() {});
+                        },
+                        child: Text('Delete All Games'))),
               ],
             ),
             Container(

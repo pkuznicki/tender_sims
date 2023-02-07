@@ -75,7 +75,7 @@ class ResultScreenState extends State<ResultScreen> {
         }
 
         //Write results
-        //resMap[game_id_prv] = {'ts': Timestamp.now()};
+        resMap['info'] = {'ts': Timestamp.now()};
         final docRef_result =
             FirebaseFirestore.instance.collection('results').doc(game_id_prv);
         docRef_result.set(resMap).then((value) {

@@ -1,12 +1,12 @@
 class tnConstants {
   static List<double> get_cogs_pars({required String team_id}) {
     Map<String, List<double>> result = {
-      'polaris': [0, 11, 2100, 7.68],
-      'river': [0, 10, 2100, 6.98],
-      'beach': [0, 9, 2100, 6.29],
-      'sunset': [0, 8, 1800, 5.88],
-      'centerfield': [0, 7, 1800, 5.15],
-      'admin': [0, 15, 2100, 14],
+      'polaris': [0, 11, 2100000, 7.68],
+      'river': [0, 10, 2100000, 6.98],
+      'beach': [0, 9, 2100000, 6.29],
+      'sunset': [0, 8, 1800000, 5.88],
+      'centerfield': [0, 7, 1800000, 5.15],
+      'admin': [0, 15, 2100000, 14],
     };
 
     return result[team_id] ?? [-1, -1, -1, -1];
@@ -21,7 +21,7 @@ class tnConstants {
     double y2 = get_cogs_pars(team_id: team_id)[3];
 
     double a = (y2 - y1) / (x2 - x1);
-    result = y1 + a * x2;
+    result = y1 + a * volume;
 
     return result;
   }
