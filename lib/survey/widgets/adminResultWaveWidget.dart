@@ -8,6 +8,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/interfaces/ICalculation.dart';
 import 'package:tender_sims/business/calculationMultipleVolume.dart';
 import 'package:tender_sims/survey/widgets/detailsWidget.dart' as pop;
+import 'package:tender_sims/business/constants.dart' as cst;
 
 class ResultScreen extends StatefulWidget {
   String wave_id_prv = 'no_wave_id';
@@ -33,24 +34,31 @@ class ResultScreenState extends State<ResultScreen> {
   @override
   void initState() {
     // Waves Summary
-    for (var w = 0; w < 5; w++) {
-      for (var g = 0; g < 4; g++) {
-        var collection = FirebaseFirestore.instance.collection('results');
-        var snapshots = collection.get().then(
-          (qs) {
-            for (var doc in qs.docs) {
-              print(doc['salesdata']);
-            }
-          },
-        );
+
+    // Initiate Map
+    Map<String, Map<String, double>> map_summary = {};
+    List<String> lst_metrics = ['cogsdata', 'profitdata', 'salesdata'];
+    List<String> lst_team_ids = cst.tnConstants.get_team_names().keys.toList();
+    for (String metric in lst_metrics) {
+      for (String team in lst_team_ids) {
+        if (map_summary.containsKey(team) == false) {
+          map_summary[team] = {};
+        }
+        map_summary[team]?[metric] = 0;
       }
     }
 
-    CollectionReference collectionRef =
-        FirebaseFirestore.instance.collection(wave_id_prv);
-
-    collectionRef.get().then((qs) {
-      if (qs.size > 0) {}
+    var collection = FirebaseFirestore.instance.collection('results');
+    collection.get().then((qs) {
+      qs.docs.forEach((doc) {
+        doc.data().forEach((team, map_values) {
+          (map_values as Map).forEach((metric, value) {
+            map_summary[team]?[metric] =
+                ((map_summary[team]?[metric]) ?? 0) + value;
+          });
+        });
+      });
+      print(map_summary);
     });
 
     super.initState();
