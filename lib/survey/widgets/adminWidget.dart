@@ -109,7 +109,7 @@ class AdminScreenState extends State<AdminScreen> {
                   width: 300,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.go('/results/$game_id');
+                      context.go('/results/w1');
                     },
                     child: Text('Wave 1 Results'),
                   ),

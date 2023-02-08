@@ -10,78 +10,47 @@ import 'package:tender_sims/business/calculationMultipleVolume.dart';
 import 'package:tender_sims/survey/widgets/detailsWidget.dart' as pop;
 
 class ResultScreen extends StatefulWidget {
-  String game_id_prv = 'no_game_id';
+  String wave_id_prv = 'no_wave_id';
 
-  ResultScreen({required String game_id}) {
-    game_id_prv = game_id;
+  ResultScreen({required String wave_id}) {
+    wave_id_prv = wave_id;
   }
 
   @override
-  State<ResultScreen> createState() => ResultScreenState(game_id: game_id_prv);
+  State<ResultScreen> createState() => ResultScreenState(wave_id: wave_id_prv);
 }
 
 class ResultScreenState extends State<ResultScreen> {
   List<charts.Series<OrdinalSales, String>> result_data = [];
-  String game_id_prv = 'no_game_id';
+  String wave_id_prv = 'no_wave_id';
   String title = 'no_title';
   bool data_exists = false;
   List<Widget> logWidget = [];
-  ResultScreenState({required String game_id}) {
-    game_id_prv = game_id;
+  ResultScreenState({required String wave_id}) {
+    wave_id_prv = wave_id;
   }
 
   @override
   void initState() {
+    // Waves Summary
+    for (var w = 0; w < 5; w++) {
+      for (var g = 0; g < 4; g++) {
+        var collection = FirebaseFirestore.instance.collection('results');
+        var snapshots = collection.get().then(
+          (qs) {
+            for (var doc in qs.docs) {
+              print(doc['salesdata']);
+            }
+          },
+        );
+      }
+    }
+
     CollectionReference collectionRef =
-        FirebaseFirestore.instance.collection(game_id_prv);
+        FirebaseFirestore.instance.collection(wave_id_prv);
 
     collectionRef.get().then((qs) {
-      if (qs.size > 0) {
-        data_exists = true;
-        ICalculation cs;
-        Map<String, dynamic> resMap = {};
-
-        // Calculation Wave 1
-        if (game_id_prv.substring(1, 2) == '1') {
-          cs = CalculationSingle(qs: qs, game_id: game_id_prv);
-          result_data = cs.getSeries();
-          this.title = cs.getTitle();
-          this.logWidget = cs.get_log();
-          resMap = cs.calculatedData() as Map<String, dynamic>;
-        }
-        // Calculation Wave 2
-        if (game_id_prv.substring(1, 2) == '2') {
-          cs = CalculationMultipleVolume(qs: qs, game_id: game_id_prv);
-          result_data = cs.getSeries();
-          this.title = cs.getTitle();
-          this.logWidget = cs.get_log();
-          resMap = cs.calculatedData() as Map<String, dynamic>;
-        }
-        // Calculation Wave 3
-        if (game_id_prv.substring(1, 2) == '3') {
-          cs = CalculationMultiplePercent(qs: qs, game_id: game_id_prv);
-          result_data = cs.getSeries();
-          this.title = cs.getTitle();
-          this.logWidget = cs.get_log();
-          resMap = cs.calculatedData() as Map<String, dynamic>;
-        }
-        // Calculation Wave 4
-        if (game_id_prv.substring(1, 2) == '4') {
-          cs = CalculationQualitative(qs: qs, game_id: game_id_prv);
-          result_data = cs.getSeries();
-          this.title = cs.getTitle();
-          this.logWidget = cs.get_log();
-          resMap = cs.calculatedData() as Map<String, dynamic>;
-        }
-
-        //Write results
-        resMap['info'] = {'ts': Timestamp.now()};
-        final docRef_result =
-            FirebaseFirestore.instance.collection('results').doc(game_id_prv);
-        docRef_result.set(resMap).then((value) {
-          setState(() {});
-        });
-      }
+      if (qs.size > 0) {}
     });
 
     super.initState();
@@ -121,28 +90,6 @@ class ResultScreenState extends State<ResultScreen> {
                 )
               ],
               barGroupingType: charts.BarGroupingType.grouped,
-            ),
-          ),
-          Container(
-            height: 30,
-          ),
-          Container(
-            height: 50,
-            width: 300,
-            child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor:
-                    Colors.grey.shade300, // background (button) color
-                foregroundColor: Colors.white, // foreground (text) color
-              ),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (BuildContext context) =>
-                      pop.buildPopupDialog(context, this.logWidget),
-                );
-              },
-              child: Text('Calculation Details'),
             ),
           ),
         ],

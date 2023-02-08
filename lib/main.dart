@@ -19,6 +19,7 @@ import 'package:tender_sims/survey/helpers/maps.dart';
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
 import 'package:intl/intl.dart';
 import 'package:tender_sims/survey/widgets/thankYouWidget.dart';
+import 'package:tender_sims/survey/widgets/adminResultWaveWidget.dart' as wave;
 
 // TODO Winner of all profit and per wave
 
@@ -100,6 +101,17 @@ class _MyAppState extends State<MyApp> {
       path: '/thankyou',
       builder: (BuildContext context, GoRouterState state) => thankyouWidget(),
     ));
+    // Wave Results
+    for (var w = 0; w < 5; w++) {
+      routes.add(GoRoute(
+        path: '/results/w' + w.toString(),
+        builder: (BuildContext context, GoRouterState state) =>
+            wave.ResultScreen(
+          wave_id: 'w' + w.toString(),
+        ),
+      ));
+    }
+
     _router = GoRouter(routes: routes);
     super.initState();
   }

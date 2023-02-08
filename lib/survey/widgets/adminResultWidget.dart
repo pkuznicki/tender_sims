@@ -8,6 +8,7 @@ import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/interfaces/ICalculation.dart';
 import 'package:tender_sims/business/calculationMultipleVolume.dart';
 import 'package:tender_sims/survey/widgets/detailsWidget.dart' as pop;
+import 'package:tender_sims/business/constants.dart' as cst;
 
 class ResultScreen extends StatefulWidget {
   String game_id_prv = 'no_game_id';
@@ -67,12 +68,88 @@ class ResultScreenState extends State<ResultScreen> {
         }
         // Calculation Wave 4
         if (game_id_prv.substring(1, 2) == '4') {
-          cs = CalculationQualitative(qs: qs, game_id: game_id_prv);
-          result_data = cs.getSeries();
-          this.title = cs.getTitle();
-          this.logWidget = cs.get_log();
-          resMap = cs.calculatedData() as Map<String, dynamic>;
-        }
+          //Get qual criteria from previous games to be added now but without costs
+          if (game_id_prv == 'w4g3') {
+            CollectionReference collectionRef1 =
+                FirebaseFirestore.instance.collection('w4g1');
+
+            CollectionReference collectionRef2 =
+                FirebaseFirestore.instance.collection('w4g2');
+
+            Map<String, String> map_qual_crit_old = {};
+            collectionRef1.get().then((qs) {
+              // Get upgrade info from survey
+              if (qs.size > 0) {
+                qs.docs.forEach((team_result) {
+                  String team_id = team_result['team_name_str'];
+                  String arr_qc = team_result['qual_crit_str'];
+                  map_qual_crit_old[team_id] = arr_qc;
+                });
+              }
+
+              Map<String, String> map_qual_crit_old2 = {};
+              collectionRef2.get().then((qs) {
+                // Get upgrade info from survey
+                if (qs.size > 0) {
+                  qs.docs.forEach((team_result) {
+                    String team_id = team_result['team_name_str'];
+                    String arr_qc = team_result['qual_crit_str'];
+                    map_qual_crit_old2[team_id] = arr_qc;
+                  });
+                }
+
+                //Combine both maps
+                Map<String, String> map_qual_crit_old3 = {};
+                cst.tnConstants.get_team_names().forEach(
+                  (team_id, value) {
+                    if (map_qual_crit_old.containsKey(team_id)) {
+                      map_qual_crit_old3[team_id] =
+                          map_qual_crit_old[team_id] ?? '';
+                    }
+                  },
+                );
+                cst.tnConstants.get_team_names().forEach(
+                  (team_id, value) {
+                    if (map_qual_crit_old2.containsKey(team_id)) {
+                      map_qual_crit_old3[team_id] =
+                          (map_qual_crit_old3[team_id] ?? '') +
+                              (map_qual_crit_old2[team_id] ?? '');
+                    }
+                  },
+                );
+
+                // Calculate
+                cs = CalculationQualitative(
+                    qs: qs,
+                    game_id: game_id_prv,
+                    map_old_qual_crit: map_qual_crit_old3);
+                result_data = cs.getSeries();
+                this.title = cs.getTitle();
+                this.logWidget = cs.get_log();
+                resMap = cs.calculatedData() as Map<String, dynamic>;
+              });
+            });
+          } //eo w4g3
+
+          //Get qual criteria from previous games to be added now but without costs
+          if (game_id_prv == 'w4g2') {
+            CollectionReference collectionRef1 =
+                FirebaseFirestore.instance.collection('w4g1');
+
+            Map<String, String> map_qual_crit_old = {};
+            collectionRef1.get().then((qs) {
+              // Calculate
+              cs = CalculationQualitative(
+                  qs: qs,
+                  game_id: game_id_prv,
+                  map_old_qual_crit: map_qual_crit_old);
+              result_data = cs.getSeries();
+              this.title = cs.getTitle();
+              this.logWidget = cs.get_log();
+              resMap = cs.calculatedData() as Map<String, dynamic>;
+            });
+          }
+        } // eo Wave 4
 
         //Write results
         resMap['info'] = {'ts': Timestamp.now()};

@@ -28,11 +28,16 @@ class CalculationQualitative implements ICalculation {
   Map<String, String> team_upgrades = {};
   List<Widget> log = [];
   Map<String, Map<String, dynamic>> calculatedDataPrv = {};
+  Map<String, String> map_old_qual_crit_priv = {};
 
-  CalculationQualitative({required QuerySnapshot qs, required String game_id}) {
+  CalculationQualitative(
+      {required QuerySnapshot qs,
+      required String game_id,
+      required Map<String, String> map_old_qual_crit}) {
     this.qs = qs;
     this.game_id_prv = game_id;
     this.log.add(Text('Calculation Wave 4 Started.'));
+    this.map_old_qual_crit_priv = map_old_qual_crit;
   }
 
   @override
@@ -60,11 +65,28 @@ class CalculationQualitative implements ICalculation {
         double score =
             ((tn_const.tnConstants.get_points_map)()[team_id]?[crit] ?? 0);
         team_norm_score = team_norm_score + weight * (score - 1) / 5;
+
         //Upgrades
         if ((team_upgrades[team_id] ?? '').contains(crit) && (score < 6)) {
           team_norm_score += 0.2 * weight;
         }
+        log.add(Text('Added Upgrade. Team: ' +
+            team_name +
+            ' .Score: ' +
+            double.parse(team_norm_score.toString()).toStringAsFixed(3)));
+
+        //Old Upgrades From Previous Games
+        if ((map_old_qual_crit_priv[team_id] ?? '').contains(crit) &&
+            (team_norm_score < 1)) {
+          team_norm_score += 0.2 * weight;
+        }
+        log.add(Text('Added Upgrade From Previous Game. Team: ' +
+            team_name +
+            ' .Score: ' +
+            double.parse(map_old_qual_crit_priv[team_id].toString())
+                .toStringAsFixed(3)));
       });
+
       team_qc_norm_score[team_id] = team_norm_score;
       log.add(Text('Normalized Score w/ Upgrades. Team: ' +
           team_name +
@@ -72,7 +94,7 @@ class CalculationQualitative implements ICalculation {
           double.parse(team_norm_score.toString()).toStringAsFixed(3)));
     });
 
-    // Calluate perceived bidding price
+    // Calculate perceived bidding price
     qs.docs.forEach(
       (team_result) {
         String team_id = team_result['team_name_str'];
