@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'dart:html' as html;
 
 class thankyouWidget extends StatelessWidget {
   @override
@@ -24,7 +25,13 @@ class thankyouWidget extends StatelessWidget {
               height: 50,
               width: 300,
               child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  Future<void>? wait_reload() async {
+                    await Future.delayed(Duration(seconds: 1));
+                    html.window.location.reload();
+                  }
+
+                  wait_reload();
                   context.go('/');
                 },
                 child: Text('Go back'),

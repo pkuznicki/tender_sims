@@ -9,6 +9,7 @@ import 'package:tender_sims/survey/widgets/adminResultWidget.dart';
 import 'package:tender_sims/survey/helpers/result.dart';
 import 'playerSeries.dart';
 import 'dart:html' as html;
+import 'dart:io';
 
 class AdminScreen extends StatefulWidget {
   @override
@@ -262,7 +263,13 @@ class AdminScreenState extends State<AdminScreen> {
                         foregroundColor:
                             Colors.white, // foreground (text) color
                       ),
-                      onPressed: () {
+                      onPressed: () async {
+                        Future<void>? wait_reload() async {
+                          await Future.delayed(Duration(seconds: 1));
+                          html.window.location.reload();
+                        }
+
+                        wait_reload();
                         context.go('/');
                       },
                       child: Text('Get back to the game')),
