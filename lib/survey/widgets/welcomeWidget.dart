@@ -86,6 +86,25 @@ class WelcomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 20),
                 ),
               )),
+         
+          Container(
+            height: 10,
+          ),
+          Container(
+              height: 50,
+              width: 300,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 255, 222, 57)),
+                onPressed: () {
+                  context.go('/admin');
+                },
+                child: Text(
+                  'Admin Panel',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(fontSize: 20),
+                ),
+              )),
           Container(
             height: 30,
           ),
