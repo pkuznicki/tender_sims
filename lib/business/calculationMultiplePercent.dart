@@ -63,8 +63,7 @@ class CalculationMultiplePercent implements ICalculation {
 
     //Cut winners to three
     winner_ids = winner_ids.sublist(0, 3);
-
-    //Cut to three winners
+    winners = winners.sublist(0, 3);
 
     // Calculate Awarded Volumes
     if (winners.length > 0) {
