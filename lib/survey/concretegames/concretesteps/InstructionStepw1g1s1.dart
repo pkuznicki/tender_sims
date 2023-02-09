@@ -13,7 +13,7 @@ class InstructionStepw1g1s1 extends IInstructionStep {
               ),
               Image.asset(
                 'assets/tn_w1g1s1.png',
-                scale: 2.6,
+                scale: 2,
               ),
             ])),
             Container(

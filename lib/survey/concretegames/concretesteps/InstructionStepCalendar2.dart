@@ -13,7 +13,7 @@ class InstructionStepCalendar2 extends IInstructionStep {
               ),
               Image.asset(
                 'assets/tn_calendar2.png',
-                scale: 2.5,
+                scale: 2,
               ),
             ])),
             Container(
