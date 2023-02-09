@@ -13,7 +13,7 @@ class InstructionStepMarketInTenderNation extends IInstructionStep {
               ),
               Image.asset(
                 'assets/tn_map.png',
-                scale: 4,
+                scale: 4.4,
               ),
             ])),
             Container(
