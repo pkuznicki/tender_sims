@@ -51,15 +51,16 @@ class ResultScreenState extends State<ResultScreen> {
     var collection = FirebaseFirestore.instance.collection('results');
     collection.get().then((qs) {
       qs.docs.forEach((doc) {
-        doc.data().forEach((team, map_values) {
-          (map_values as Map).forEach((metric, value) {
-            map_summary[team]?[metric] =
-                ((map_summary[team]?[metric]) ?? 0) + value;
+        if (doc.id.contains(wave_id_prv) || (wave_id_prv == 'all')) {
+          doc.data().forEach((team, map_values) {
+            (map_values as Map).forEach((metric, value) {
+              map_summary[team]?[metric] =
+                  ((map_summary[team]?[metric]) ?? 0) + value;
+            });
           });
-        });
+        }
       });
-      print(map_summary);
-    });
+    }); //eo thenn
 
     super.initState();
   }

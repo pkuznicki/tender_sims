@@ -138,17 +138,28 @@ class ResultScreenState extends State<ResultScreen> {
 
             Map<String, String> map_qual_crit_old = {};
             collectionRef1.get().then((qs) {
-              // Calculate
-              cs = CalculationQualitative(
-                  qs: qs,
-                  game_id: game_id_prv,
-                  map_old_qual_crit: map_qual_crit_old);
-              result_data = cs.getSeries();
-              this.title = cs.getTitle();
-              this.logWidget = cs.get_log();
-              resMap = cs.calculatedData() as Map<String, dynamic>;
+              // Get upgrade info from survey
+              if (qs.size > 0) {
+                qs.docs.forEach((team_result) {
+                  String team_id = team_result['team_name_str'];
+                  String arr_qc = team_result['qual_crit_str'];
+                  map_qual_crit_old[team_id] = arr_qc;
+                });
+              }
+
+              collectionRef1.get().then((qs) {
+                // Calculate
+                cs = CalculationQualitative(
+                    qs: qs,
+                    game_id: game_id_prv,
+                    map_old_qual_crit: map_qual_crit_old);
+                result_data = cs.getSeries();
+                this.title = cs.getTitle();
+                this.logWidget = cs.get_log();
+                resMap = cs.calculatedData() as Map<String, dynamic>;
+              });
             });
-          }
+          } //eo w4g2
         } // eo Wave 4
 
         //Write results
