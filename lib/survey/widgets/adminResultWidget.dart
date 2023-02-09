@@ -36,15 +36,15 @@ class ResultScreenState extends State<ResultScreen> {
     CollectionReference collectionRef =
         FirebaseFirestore.instance.collection(game_id_prv);
 
-    collectionRef.get().then((qs) {
-      if (qs.size > 0) {
+    collectionRef.get().then((qs_this) {
+      if (qs_this.size > 0) {
         data_exists = true;
         ICalculation cs;
         Map<String, dynamic> resMap = {};
 
         // Calculation Wave 1
         if (game_id_prv.substring(1, 2) == '1') {
-          cs = CalculationSingle(qs: qs, game_id: game_id_prv);
+          cs = CalculationSingle(qs: qs_this, game_id: game_id_prv);
           result_data = cs.getSeries();
           this.title = cs.getTitle();
           this.logWidget = cs.get_log();
@@ -52,7 +52,7 @@ class ResultScreenState extends State<ResultScreen> {
         }
         // Calculation Wave 2
         if (game_id_prv.substring(1, 2) == '2') {
-          cs = CalculationMultipleVolume(qs: qs, game_id: game_id_prv);
+          cs = CalculationMultipleVolume(qs: qs_this, game_id: game_id_prv);
           result_data = cs.getSeries();
           this.title = cs.getTitle();
           this.logWidget = cs.get_log();
@@ -60,7 +60,7 @@ class ResultScreenState extends State<ResultScreen> {
         }
         // Calculation Wave 3
         if (game_id_prv.substring(1, 2) == '3') {
-          cs = CalculationMultiplePercent(qs: qs, game_id: game_id_prv);
+          cs = CalculationMultiplePercent(qs: qs_this, game_id: game_id_prv);
           result_data = cs.getSeries();
           this.title = cs.getTitle();
           this.logWidget = cs.get_log();
@@ -120,13 +120,22 @@ class ResultScreenState extends State<ResultScreen> {
 
                 // Calculate
                 cs = CalculationQualitative(
-                    qs: qs,
+                    qs: qs_this,
                     game_id: game_id_prv,
                     map_old_qual_crit: map_qual_crit_old3);
                 result_data = cs.getSeries();
                 this.title = cs.getTitle();
                 this.logWidget = cs.get_log();
                 resMap = cs.calculatedData() as Map<String, dynamic>;
+              });
+
+              //Write results
+              resMap['info'] = {'ts': Timestamp.now()};
+              final docRef_result = FirebaseFirestore.instance
+                  .collection('results')
+                  .doc(game_id_prv);
+              docRef_result.set(resMap).then((value) {
+                setState(() {});
               });
             });
           } //eo w4g3
@@ -150,7 +159,7 @@ class ResultScreenState extends State<ResultScreen> {
               collectionRef1.get().then((qs) {
                 // Calculate
                 cs = CalculationQualitative(
-                    qs: qs,
+                    qs: qs_this,
                     game_id: game_id_prv,
                     map_old_qual_crit: map_qual_crit_old);
                 result_data = cs.getSeries();
