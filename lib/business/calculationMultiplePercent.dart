@@ -62,9 +62,12 @@ class CalculationMultiplePercent implements ICalculation {
     });
 
     //Cut winners to three
-    winner_ids = winner_ids.sublist(0, 3);
-    winners = winners.sublist(0, 3);
-
+    if (winner_ids.length > 3) {
+      winner_ids = winner_ids.sublist(0, 3);
+    }
+    if (winners.length > 3) {
+      winners = winners.sublist(0, 3);
+    }
     // Calculate Awarded Volumes
     if (winners.length > 0) {
       awarded_volumes[winners[0].key] = (3000000 * 0.6).round();
