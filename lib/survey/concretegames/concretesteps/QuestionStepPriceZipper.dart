@@ -14,7 +14,8 @@ class QuestionStepPriceZipper extends IQuestionStep {
               maximumValue: 50,
               defaultValue: 25,
               minimumValueDescription: '0',
-              maximumValueDescription: '50',
-              enum_format: enum_scale_format.price),
+              maximumValueDescription: '50')
+              //,
+             // enum_format: enum_scale_format.price),
         );
 }
