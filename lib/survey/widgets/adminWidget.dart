@@ -256,18 +256,17 @@ class AdminScreenState extends State<AdminScreen> {
                   height: 50,
                   width: 300,
                   child: ElevatedButton(
-                     style: ElevatedButton.styleFrom(
-                          backgroundColor:
-                              Color.fromARGB(255, 255, 222, 57), // background (button) color
-                          foregroundColor:
-                              Colors.white, // foreground (text) color
-                        ),
-                    onPressed: () {
-                      context.go('/');
-                  },
-                  child: Text('Get back to the game')
-              ),
-            ),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor:
+                            Colors.grey.shade400, // background (button) color
+                        foregroundColor:
+                            Colors.white, // foreground (text) color
+                      ),
+                      onPressed: () {
+                        context.go('/');
+                      },
+                      child: Text('Get back to the game')),
+                ),
               ],
             )
           ],

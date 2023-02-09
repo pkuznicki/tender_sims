@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -58,6 +60,11 @@ class CalculationMultiplePercent implements ICalculation {
     winners.forEach((element) {
       winner_ids.add(element.key.toString());
     });
+
+    //Cut winners to three
+    winner_ids = winner_ids.sublist(0, 3);
+
+    //Cut to three winners
 
     // Calculate Awarded Volumes
     if (winners.length > 0) {

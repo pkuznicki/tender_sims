@@ -86,7 +86,6 @@ class WelcomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 20),
                 ),
               )),
-         
           Container(
             height: 10,
           ),
@@ -95,7 +94,7 @@ class WelcomeScreen extends StatelessWidget {
               width: 300,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Color.fromARGB(255, 255, 222, 57)),
+                    backgroundColor: Colors.grey.shade400),
                 onPressed: () {
                   context.go('/admin');
                 },
