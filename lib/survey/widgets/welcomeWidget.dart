@@ -87,14 +87,15 @@ class WelcomeScreen extends StatelessWidget {
                 ),
               )),
           Container(
-            height: 10,
+            height: 25,
           ),
           Container(
-              height: 50,
+              height: 25,
               width: 300,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.grey.shade400),
+                    backgroundColor: Colors.white,
+                    foregroundColor: Colors.grey),
                 onPressed: () {
                   context.go('/admin');
                 },
