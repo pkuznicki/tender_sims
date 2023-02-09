@@ -54,7 +54,8 @@ class CalculationSingle implements ICalculation {
       );
 
       log.add(Text('Winning Team: ' + team_winning));
-      log.add(Text('Winning Price: ' + price_winning.toString()));
+      log.add(Text('Winning Price: ' +
+          double.parse(price_winning.toString()).toStringAsFixed(2)));
 
       qs.docs.forEach(
         (team_result) {
