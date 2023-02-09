@@ -70,21 +70,12 @@ class CalculationQualitative implements ICalculation {
         if ((team_upgrades[team_id] ?? '').contains(crit) && (score < 6)) {
           team_norm_score += 0.2 * weight;
         }
-        log.add(Text('Added Upgrade. Team: ' +
-            team_name +
-            ' .Score: ' +
-            double.parse(team_norm_score.toString()).toStringAsFixed(3)));
 
         //Old Upgrades From Previous Games
         if ((map_old_qual_crit_priv[team_id] ?? '').contains(crit) &&
-            (team_norm_score < 1)) {
+            (team_norm_score + 0.2 * weight) <= 1) {
           team_norm_score += 0.2 * weight;
         }
-        log.add(Text('Added Upgrade From Previous Game. Team: ' +
-            team_name +
-            ' .Score: ' +
-            double.parse(map_old_qual_crit_priv[team_id].toString())
-                .toStringAsFixed(3)));
       });
 
       team_qc_norm_score[team_id] = team_norm_score;

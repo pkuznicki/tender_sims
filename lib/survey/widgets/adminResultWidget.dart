@@ -158,17 +158,28 @@ class ResultScreenState extends State<ResultScreen> {
                 this.logWidget = cs.get_log();
                 resMap = cs.calculatedData() as Map<String, dynamic>;
               });
+
+              //Write results
+              resMap['info'] = {'ts': Timestamp.now()};
+              final docRef_result = FirebaseFirestore.instance
+                  .collection('results')
+                  .doc(game_id_prv);
+              docRef_result.set(resMap).then((value) {
+                setState(() {});
+              });
             });
           } //eo w4g2
         } // eo Wave 4
 
-        //Write results
-        resMap['info'] = {'ts': Timestamp.now()};
-        final docRef_result =
-            FirebaseFirestore.instance.collection('results').doc(game_id_prv);
-        docRef_result.set(resMap).then((value) {
-          setState(() {});
-        });
+        if (int.parse(game_id_prv.substring(1, 2)) < 4) {
+          //Write results
+          resMap['info'] = {'ts': Timestamp.now()};
+          final docRef_result =
+              FirebaseFirestore.instance.collection('results').doc(game_id_prv);
+          docRef_result.set(resMap).then((value) {
+            setState(() {});
+          });
+        }
       }
     });
 
