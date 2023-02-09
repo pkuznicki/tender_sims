@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tender_sims/business/calculationSingle.dart';
 import 'package:tender_sims/business/calculationQualitative.dart';
 import 'package:tender_sims/business/calculationMultiplePercent.dart';
+import 'package:tender_sims/business/calculationWave.dart';
 import 'package:tender_sims/survey/widgets/sampleChart.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:tender_sims/survey/interfaces/ICalculation.dart';
@@ -48,8 +49,13 @@ class ResultScreenState extends State<ResultScreen> {
       }
     }
 
+    //get data
     var collection = FirebaseFirestore.instance.collection('results');
     collection.get().then((qs) {
+      if (qs.size > 0) {
+        data_exists = true;
+      }
+
       qs.docs.forEach((doc) {
         if (doc.id.contains(wave_id_prv) || (wave_id_prv == 'all')) {
           doc.data().forEach((team, map_values) {
@@ -60,7 +66,19 @@ class ResultScreenState extends State<ResultScreen> {
           });
         }
       });
-    }); //eo thenn
+
+      //get result data
+
+      // Calculate
+      CalculationWave cs;
+      cs = CalculationWave(wave_id: wave_id_prv, map_summary: map_summary);
+
+      result_data = cs.getSeries();
+      this.title = cs.getTitle();
+      this.logWidget = cs.get_log();
+
+      setState(() {});
+    }); //eo then
 
     super.initState();
   }
@@ -76,7 +94,7 @@ class ResultScreenState extends State<ResultScreen> {
           Container(
             height: 10,
           ),
-          Text(style: TextStyle(fontSize: 20), 'Winning Team: $title'),
+          //Text(style: TextStyle(fontSize: 20), 'Winning Team: $title'),
           Container(
             height: 500,
             width: 1000,

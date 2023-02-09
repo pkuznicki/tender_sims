@@ -111,6 +111,11 @@ class _MyAppState extends State<MyApp> {
         ),
       ));
     }
+    routes.add(GoRoute(
+      path: '/results/all',
+      builder: (BuildContext context, GoRouterState state) =>
+          wave.ResultScreen(wave_id: 'all'),
+    ));
 
     _router = GoRouter(routes: routes);
     super.initState();

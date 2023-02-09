@@ -66,7 +66,17 @@ class ResultScreenState extends State<ResultScreen> {
           this.logWidget = cs.get_log();
           resMap = cs.calculatedData() as Map<String, dynamic>;
         }
-        // Calculation Wave 4
+
+        // Calculation Wave 4 only w4g1
+        if (game_id_prv.substring(1, 2) == '4') {
+          cs = CalculationQualitative(
+              qs: qs_this, game_id: game_id_prv, map_old_qual_crit: {});
+          result_data = cs.getSeries();
+          this.title = cs.getTitle();
+          this.logWidget = cs.get_log();
+          resMap = cs.calculatedData() as Map<String, dynamic>;
+        }
+        // Calculation Wave 4 with old games
         if (game_id_prv.substring(1, 2) == '4') {
           //Get qual criteria from previous games to be added now but without costs
           if (game_id_prv == 'w4g3') {
@@ -127,15 +137,15 @@ class ResultScreenState extends State<ResultScreen> {
                 this.title = cs.getTitle();
                 this.logWidget = cs.get_log();
                 resMap = cs.calculatedData() as Map<String, dynamic>;
-              });
 
-              //Write results
-              resMap['info'] = {'ts': Timestamp.now()};
-              final docRef_result = FirebaseFirestore.instance
-                  .collection('results')
-                  .doc(game_id_prv);
-              docRef_result.set(resMap).then((value) {
-                setState(() {});
+                //Write results
+                resMap['info'] = {'ts': Timestamp.now()};
+                final docRef_result = FirebaseFirestore.instance
+                    .collection('results')
+                    .doc(game_id_prv);
+                docRef_result.set(resMap).then((value) {
+                  setState(() {});
+                });
               });
             });
           } //eo w4g3
@@ -180,7 +190,8 @@ class ResultScreenState extends State<ResultScreen> {
           } //eo w4g2
         } // eo Wave 4
 
-        if (int.parse(game_id_prv.substring(1, 2)) < 4) {
+        if ((int.parse(game_id_prv.substring(1, 2)) < 4) ||
+            (game_id_prv == 'w4g1')) {
           //Write results
           resMap['info'] = {'ts': Timestamp.now()};
           final docRef_result =

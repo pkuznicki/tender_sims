@@ -122,7 +122,7 @@ class AdminScreenState extends State<AdminScreen> {
                   width: 300,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.go('/results/$game_id');
+                      context.go('/results/w2');
                     },
                     child: Text('Wave 2 Results'),
                   ),
@@ -135,7 +135,7 @@ class AdminScreenState extends State<AdminScreen> {
                   width: 300,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.go('/results/$game_id');
+                      context.go('/results/w3');
                     },
                     child: Text('Wave 3 Results'),
                   ),
@@ -148,7 +148,7 @@ class AdminScreenState extends State<AdminScreen> {
                   width: 300,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.go('/results/$game_id');
+                      context.go('/results/w4');
                     },
                     child: Text('Wave 4 Results'),
                   ),
@@ -161,7 +161,7 @@ class AdminScreenState extends State<AdminScreen> {
                   width: 300,
                   child: ElevatedButton(
                     onPressed: () {
-                      context.go('/results/$game_id');
+                      context.go('/results/all');
                     },
                     child: Text('Overall Results'),
                   ),
