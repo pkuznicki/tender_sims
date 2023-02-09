@@ -117,6 +117,8 @@ class CalculationQualitative implements ICalculation {
     winners.forEach((element) {
       winner_ids.add(element.key.toString());
     });
+    winners = winners.sublist(0, 3);
+    winner_ids = winner_ids.sublist(0, 3);
 
     // Calculate Awarded Volumes
     if (winners.length > 0) {
