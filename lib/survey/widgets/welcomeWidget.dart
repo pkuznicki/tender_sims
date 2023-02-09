@@ -86,11 +86,7 @@ class WelcomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 20),
                 ),
               )),
-              Column(
-              children: [
-                Container(
-                  height: 25,
-                ),
+         
           Container(
             height: 10,
           ),
@@ -109,11 +105,9 @@ class WelcomeScreen extends StatelessWidget {
                   style: TextStyle(fontSize: 20),
                 ),
               )),
-           Container(
+          Container(
             height: 30,
           ),
-              ],
-            ),
         ],
       )),
     );
