@@ -8,5 +8,7 @@ class CompletionStepEndGame extends ICompletionStep {
       : super(
             stepIdentifier: StepIdentifier(id: 'error_end_game'),
             title: 'Error No Step Found!',
-            text: 'Click NEXT to send the results.');
+            text: 'Click FINAL SUBMISSION to send the results.',
+            buttonText: 'Final submission'
+            );
 }

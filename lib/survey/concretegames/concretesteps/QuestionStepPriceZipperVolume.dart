@@ -14,7 +14,7 @@ class QuestionStepPriceZipperVolume extends IQuestionStep {
               maximumValue: 2100000,
               defaultValue: 1000000,
               minimumValueDescription: '0',
-              maximumValueDescription: '2100000',
+              maximumValueDescription: '2100000'),
               enum_format: enum_scale_format.volume),
         );
 }

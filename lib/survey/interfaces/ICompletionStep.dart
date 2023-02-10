@@ -4,5 +4,6 @@ abstract class ICompletionStep extends CompletionStep {
   ICompletionStep(
       {required super.stepIdentifier,
       required super.title,
-      required super.text});
+      required super.text,
+      required super.buttonText});
 }

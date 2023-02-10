@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 
 class CompletionStepEndGame extends ICompletionStep {
   CompletionStepEndGame()
-      : super(
+     : super(
             stepIdentifier: StepIdentifier(id: 'end_game'),
             title: 'End of Game!',
-            text: 'Click FINAL SUBMISSION to send the results.');
+            text: 'Click FINAL SUBMISSION to send the results.',
+            buttonText: 'Final submission'
+            );
 }
